@@ -1,4 +1,4 @@
-// Products Data
+  // Products Data
 const productsData = {
   data:[
     { name:"1GB MTN DATA", price:5, image:"images/data-bundle.png" },
@@ -125,8 +125,8 @@ function payWithPaystack(name,amount){
 }
 
 // Slide-in Menu
-function openMenu(){ document.getElementById("sideMenu").classList.add("show"); }
-function closeMenu(){ document.getElementById("sideMenu").classList.remove("show"); }
+function openMenu(){ document.getElementById("sideMenu").classList.add("show"); document.getElementById("menuOverlay").classList.add("show"); if(window.innerWidth>768) document.querySelector(".container").style.marginLeft="260px"; }
+function closeMenu(){ document.getElementById("sideMenu").classList.remove("show"); document.getElementById("menuOverlay").classList.remove("show"); document.querySelector(".container").style.marginLeft="0"; }
 
 // Live Support Panel
 function openLiveSupport(){ document.getElementById("liveSupportPanel").classList.add("show"); }
