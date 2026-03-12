@@ -1,41 +1,207 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Digital Hub Store</title>
-<link rel="stylesheet" href="style.css">
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f4f4;
+}
+
+header{
+background:#0f172a;
+color:white;
+text-align:center;
+padding:20px;
+font-size:24px;
+font-weight:bold;
+}
+
+.container{
+padding:15px;
+}
+
+.products{
+display:grid;
+grid-template-columns:1fr;
+gap:25px;
+}
+
+.card{
+background:white;
+border-radius:14px;
+padding:25px;
+text-align:center;
+box-shadow:0 6px 15px rgba(0,0,0,0.15);
+}
+
+.card img{
+width:160px;
+margin-bottom:15px;
+}
+
+.card h3{
+font-size:22px;
+margin:10px 0;
+}
+
+.card p{
+font-size:16px;
+color:#555;
+}
+
+.price{
+font-size:20px;
+color:#16a34a;
+font-weight:bold;
+margin:10px 0;
+}
+
+.btn{
+display:block;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+font-size:16px;
+color:white;
+cursor:pointer;
+}
+
+.buy{
+background:#2563eb;
+}
+
+footer{
+text-align:center;
+padding:20px;
+font-size:13px;
+color:#666;
+}
+
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:15px 18px;
+border-radius:50px;
+font-size:16px;
+text-decoration:none;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>Digital Hub Store</h1>
+<header>
+Digital Hub Store
+</header>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="support.html">Support</a>
-</nav>
+<div class="container">
 
-<h2>Main Products</h2>
+<div class="products">
 
-<div class="product">
-<img src="images/nord-vpn.jpg">
-<h3>VPN Accounts</h3>
-<p>Secure VPN services</p>
-<a href="vpn.html"><button>View VPNs</button></a>
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/NordVPN_logo.svg">
+
+<h3>NordVPN Account</h3>
+
+<p>Premium secure VPN account</p>
+
+<div class="price">GH₵20</div>
+
+<button class="btn buy" onclick="payWithPaystack()">Buy Now</button>
+
 </div>
 
-<div class="product">
-<img src="images/netflix.png">
-<h3>Netflix Accounts</h3>
-<p>Premium Netflix access</p>
-<a href="netflix.html"><button>View Accounts</button></a>
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg">
+
+<h3>Netflix Premium</h3>
+
+<p>Premium Netflix streaming</p>
+
+<div class="price">GH₵15</div>
+
+<button class="btn buy" onclick="payWithPaystack()">Buy Now</button>
+
 </div>
 
-<div class="product">
-<img src="images/spotify.png">
-<h3>Spotify Subscriptions</h3>
-<p>Spotify Premium</p>
-<a href="spotify.html"><button>View Plans</button></a>
+<div class="card">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg">
+
+<h3>Spotify Premium</h3>
+
+<p>Unlimited music streaming</p>
+
+<div class="price">GH₵10</div>
+
+<button class="btn buy" onclick="payWithPaystack()">Buy Now</button>
+
 </div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Digital Hub Store
+</footer>
+
+<a class="whatsapp-float" href="https://wa.me/233509329683">
+Chat
+</a>
+
+<script>
+
+function payWithPaystack(){
+
+var handler = PaystackPop.setup({
+
+key: 'pk_live_76e7df83f71c725b7e10d514b3c935324a97761e',
+
+email: 'customer@email.com',
+
+amount: 2000,
+
+currency: "GHS",
+
+callback: function(response){
+
+alert('Payment successful! Reference: ' + response.reference);
+
+},
+
+onClose: function(){
+
+alert('Transaction cancelled');
+
+}
+
+});
+
+handler.openIframe();
+
+}
+
+</script>
 
 </body>
 </html>
