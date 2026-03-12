@@ -4,75 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Hub Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script src="https://js.paystack.co/v1/inline.js"></script>
+<style>
+body{font-family:Arial;margin:0;padding:0;background:#f5f5f5;}
+.container{max-width:500px;margin:auto;padding:20px;}
+h2{text-align:center;margin-bottom:20px;}
+.product{background:#fff;padding:20px;border-radius:12px;text-align:center;box-shadow:0 4px 15px rgba(0,0,0,0.2);margin-bottom:20px;}
+button{padding:12px 20px;margin:10px 5px;border:none;border-radius:8px;cursor:pointer;font-size:16px;}
+.buy-btn{background:#ff4b4b;color:white;}
+.cart-btn{background:#00aaff;color:white;}
+.whatsapp-float{
+position:fixed;bottom:20px;right:20px;background:#25D366;color:white;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,0.3);z-index:1000;
+}
+</style>
 </head>
 <body>
 
-<header>
-  <div class="menu-float" onclick="openMenu()">☰</div>
-  <div class="logo">Digital Hub Store</div>
-</header>
-
-<!-- Slide-in Menu -->
-<div id="sideMenu" class="side-menu">
-  <span onclick="closeMenu()" class="close-menu">✕</span>
-  <h3>Menu</h3>
-  <button onclick="filterCategory('data')">Data Bundles</button>
-  <button onclick="filterCategory('nordvpn')">NordVPN</button>
-  <button onclick="filterCategory('piavpn')">PIA VPN</button>
-  <button onclick="filterCategory('textvoice')">TextNow / TextFree</button>
-  <button onclick="filterCategory('netflix')">Netflix</button>
-  <button onclick="openLiveSupport()">Live Support</button>
-</div>
-
-<!-- Overlay -->
-<div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
-
-<div class="search-box">
-  <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
-</div>
-
 <div class="container">
-  <div id="products" class="products"></div>
+<h2>Digital Hub Store</h2>
+
+<div class="product">
+  <h3>1GB MTN DATA</h3>
+  <p>Price: GHC 10</p>
+  <button class="cart-btn" onclick="addToCart('1GB MTN DATA', 10)">Add to Cart</button>
+  <button class="buy-btn" onclick="buyNow('1GB MTN DATA', 10)">Buy Now</button>
 </div>
 
-<!-- Floating Buttons -->
-<a class="cart-float" onclick="openCart()">🛒</a>
-<a class="whatsapp-float" href="https://wa.me/233509329683" target="_blank">💬</a>
-
-<!-- Cart Panel -->
-<div id="cartPanel" class="cart-panel">
-  <div class="cart-header">
-    <h3>Your Cart</h3>
-    <span onclick="closeCart()">✕</span>
-  </div>
-  <div id="cartItems"></div>
-  <div class="cart-footer">
-    Total: GH₵<span id="cartTotal">0</span><br>
-    <button onclick="checkoutCart()">Checkout</button>
-  </div>
+<div class="product">
+  <h3>2GB MTN DATA</h3>
+  <p>Price: GHC 20</p>
+  <button class="cart-btn" onclick="addToCart('2GB MTN DATA', 20)">Add to Cart</button>
+  <button class="buy-btn" onclick="buyNow('2GB MTN DATA', 20)">Buy Now</button>
+</div>
 </div>
 
-<!-- Live Support Panel -->
-<div id="liveSupportPanel" class="live-support-panel">
-  <span onclick="closeLiveSupport()" class="close-support">✕</span>
-  <h3>Live Support</h3>
-  <p>Chat with our support team here. Tawk.to widget will appear when integrated.</p>
-  <div id="tawkWidget"></div>
-</div>
+<a href="https://wa.me/233509329683" class="whatsapp-float" target="_blank">💬</a>
 
-<!-- Toast Notifications -->
-<div id="toastContainer"></div>
+<script>
+function addToCart(item, price){
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart.push({item, price});
+  localStorage.setItem('cart', JSON.stringify(cart));
+  alert(item + " added to cart!");
+  window.location.href='checkout.html';
+}
 
-<!-- Footer -->
-<footer class="footer">
-  <p>📧 Email: contact@digitalhubstore.com</p>
-  <p>📞 Phone: +233 509 329 683</p>
-  <p>📍 Location: Accra, Ghana</p>
-</footer>
-
-<script src="store.js" defer></script>
+function buyNow(item, price){
+  const cart = [{item, price}]; // Single item for Buy Now
+  localStorage.setItem('cart', JSON.stringify(cart));
+  window.location.href='checkout.html';
+}
+</script>
 </body>
 </html>
