@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout</title>
+<style>
+body{
+font-family: Arial;
+background:#f4f4f4;
+padding:40px;
+}
+
+.container{
+background:white;
+padding:30px;
+max-width:400px;
+margin:auto;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Checkout</h2>
+
+<form id="checkout-form">
+
+<input type="text" id="name" placeholder="Full Name" required>
+
+<input type="email" id="email" placeholder="Email Address" required>
+
+<input type="text" id="address" placeholder="Address" required>
+
+<button type="submit">Buy Now</button>
+
+</form>
+
+</div>
+
+<script>
+
+document.getElementById("checkout-form").addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const address = document.getElementById("address").value;
+
+// send details to backend
+fetch("/create-checkout-session",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+name:name,
+email:email,
+address:address
+})
+})
+.then(res=>res.json())
+.then(data=>{
+window.location = data.url;
+});
+
+});
+
+</script>
+
+</body>
+</html>
