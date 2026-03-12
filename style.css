@@ -1,46 +1,76 @@
-/* Hide side menu by default, only show when triggered */
-.side-menu {
+/* Floating Buttons */
+.cart-float {
   position: fixed;
-  top: 0;
-  left: -260px; /* hidden off screen */
-  width: 260px;
-  height: 100%;
-  background: rgba(30,41,59,0.95);
-  padding: 20px;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.4);
-  transition: 0.4s;
-  z-index: 1001;
-}
-.side-menu.show { left: 0; }
-
-/* Menu overlay background when menu is open */
-.menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  z-index: 1000;
-  display: none;
-}
-.menu-overlay.show { display: block; }
-
-/* Floating menu button */
-.menu-float {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  width: 50px;
-  height: 50px;
+  bottom: 90px;
+  right: 20px;
   background: #38bdf8;
   color: white;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 30px;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  z-index: 1002;
+  z-index: 1000;
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+/* Cart Panel Slide-in */
+.cart-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 350px;
+  height: 100%;
+  background: #020617;
+  padding: 20px;
+  transition: 0.4s;
+  overflow-y: auto;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+.cart-panel.show {
+  right: 0;
+}
+
+/* Toast Notifications */
+#toastContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+}
+.toast {
+  background: #22c55e;
+  color: white;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  animation: slideIn 0.3s ease-out;
+}
+@keyframes slideIn {
+  from {opacity: 0; transform: translateY(-20px);}
+  to {opacity: 1; transform: translateY(0);}
 }
