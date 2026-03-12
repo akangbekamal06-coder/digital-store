@@ -63,6 +63,7 @@ function searchProducts(){
   }
 }
 
+/* CART */
 function openCart(){document.getElementById("cartPanel").classList.add("show"); loadCart();}
 function closeCart(){document.getElementById("cartPanel").classList.remove("show");}
 function addToCart(name,price){
@@ -93,6 +94,9 @@ function removeItem(index){
   localStorage.setItem("cart",JSON.stringify(cart));
   loadCart();
 }
+function checkoutCart(){
+  alert("Checkout coming soon. You can Buy Now from product cards.");
+}
 
 function payWithPaystack(productName,amount){
   let email = prompt("Enter your email");
@@ -103,14 +107,7 @@ function payWithPaystack(productName,amount){
     amount:amount*100,
     currency:"GHS",
     callback:function(){
-      let receipt=`RECEIPT
---------------------------
-Product: ${productName}
-Amount: GH₵${amount}
-Status: PAID
-Delivery: Instant
-Thank you for buying from Digital Hub Store`;
-      alert(receipt);
+      alert(`${productName} purchased successfully!`);
       window.location.href="customer.html";
     },
     onClose:function(){alert("Payment cancelled");}
@@ -119,7 +116,3 @@ Thank you for buying from Digital Hub Store`;
 }
 
 window.onload=showAllProducts;
-
-function checkoutCart(){
-  alert("Checkout coming soon. You can Buy Now from product cards.");
-}
