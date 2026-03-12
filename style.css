@@ -34,14 +34,14 @@ box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 .product img{
-width:120px;
+width:600px;
 height:auto;
 margin-bottom:10px;
 }
-
+}
 button{
 padding:10px 20px;
-background:black;
+background:Grren;
 color:white;
 border:none;
 border-radius:5px;
