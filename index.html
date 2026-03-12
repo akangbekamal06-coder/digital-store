@@ -1,1 +1,48 @@
-index.html ```html <!DOCTYPE html> <html> <head> <title>Digital Store</title> <link rel="stylesheet" href="style.css"> </head> <body> <h1>Digital Store</h1> <nav> <a href="index.html">Home</a> <a href="login.html">Login</a> <a href="register.html">Register</a> <a href="support.html">Support</a> </nav> <h2>Products</h2> <div class="product"> <h3>VPN Accounts</h3> <p>$5</p> <button onclick="buyProduct('VPN Account')">Buy</button> </div> <div class="product"> <h3>Netflix Accounts</h3> <p>$6</p> <button onclick="buyProduct('Netflix Account')">Buy</button> </div> <div class="product"> <h3>Spotify Subscription</h3> <p>$4</p> <button onclick="buyProduct('Spotify Subscription')">Buy</button> </div> <div class="product"> <h3>Data Bundles</h3> <p>$3</p> <button onclick="buyProduct('Data Bundle')">Buy</button> </div> <script src="script.js"></script> </body> </html> ``` --- # login.html ```html <!DOCTYPE html> <html> <head> <title>Login</title> <link rel="stylesheet" href="style.css"> </head> <body> <h2>Login</h2> <input id="loginUser" placeholder="Username"> <input id="loginPass" type="password" placeholder="Password"> <button onclick="login()">Login</button> <p id="loginMessage"></p> <script src="script.js"></script> </body> </html> ``` --- # register.html ```html <!DOCTYPE html> <html> <head> <title>Create Account</title> <link rel="stylesheet" href="style.css"> </head> <body> <h2>Create Account</h2> <input id="regUser" placeholder="Username"> <input id="regPass" type="password" placeholder="Password"> <button onclick="register()">Register</button> <p id="registerMessage"></p> <script src="script.js"></script> </body> </html> ``` --- # dashboard.html ```html <!DOCTYPE html> <html> <head> <title>Admin Dashboard</title> <link rel="stylesheet" href="style.css"> </head> <body> <h1>Admin Dashboard</h1> <h3>Add Product</h3> <input id="productName" placeholder="Product Name"> <input id="productPrice" placeholder="Price"> <button onclick="addProduct()">Add Product</button> <div id="productList"></div> <script src="script.js"></script> </body> </html> ``` --- # payment.html ```html <!DOCTYPE html> <html> <head> <title>Payment</title> <link rel="stylesheet" href="style.css"> </head> <body> <h2>Payment Page</h2> <p>Click below to simulate payment.</p> <button onclick="completePayment()">Pay Now</button> <p id="paymentMessage"></p> <script src="script.js"></script> </body> </html> ``` --- # support.html ```html <!DOCTYPE html> <html> <head> <title>Support</title> <link rel="stylesheet" href="style.css"> </head> <body> <h1>Customer Support</h1> <p>If you need help contact us.</p> <p>Email: support@digitalstore.com</p> </body> </html> ``` --- # style.css ```css body{ font-family: Arial; background:#f4f4f4; margin:0; text-align:center; } nav a{ margin:10px; text-decoration:none; font-weight:bold; } .product{ background:white; padding:20px; margin:20px; border-radius:10px; display:inline-block; width:200px; box-shadow:0 0 10px rgba(0,0,0,0.1); } button{ padding:10px 20px; background:black; color:white; border:none; cursor:pointer; } ``` --- # script.js ```javascript function register(){ let user=document.getElementById("regUser").value let pass=document.getElementById("regPass").value localStorage.setItem("user",user) localStorage.setItem("pass",pass) document.getElementById("registerMessage").innerText="Account created successfully" } function login(){ let user=document.getElementById("loginUser").value let pass=document.getElementById("loginPass").value if(user===localStorage.getItem("user") && pass===localStorage.getItem("pass")){ document.getElementById("loginMessage").innerText="Login successful" } else{ document.getElementById("loginMessage").innerText="Wrong username or password" } } function buyProduct(product){ localStorage.setItem("product",product) window.location="payment.html" } function completePayment(){ let product=localStorage.getItem("product") document.getElementById("paymentMessage").innerText="Payment successful. Your "+product+" will be delivered." } function addProduct(){ let name=document.getElementById("productName").value let price=document.getElementById("productPrice").value let list=document.getElementById("productList") list.innerHTML += "<p>"+name+" - $"+price+"</p>" } ```
+<!DOCTYPE html>
+<html>
+<head>
+<title>Digital Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Digital Store</h1>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="login.html">Login</a>
+<a href="register.html">Register</a>
+<a href="support.html">Support</a>
+</nav>
+
+<h2>Products</h2>
+
+<div class="product">
+<h3>VPN Accounts</h3>
+<p>$5</p>
+<button onclick="buyProduct('VPN Account')">Buy</button>
+</div>
+
+<div class="product">
+<h3>Netflix Accounts</h3>
+<p>$6</p>
+<button onclick="buyProduct('Netflix Account')">Buy</button>
+</div>
+
+<div class="product">
+<h3>Spotify Subscription</h3>
+<p>$4</p>
+<button onclick="buyProduct('Spotify Subscription')">Buy</button>
+</div>
+
+<div class="product">
+<h3>Data Bundles</h3>
+<p>$3</p>
+<button onclick="buyProduct('Data Bundle')">Buy</button>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
