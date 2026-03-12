@@ -70,8 +70,8 @@ function addToCart(name,price){
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
   cart.push({name,price});
   localStorage.setItem("cart",JSON.stringify(cart));
-  alert(name+" added to cart");
   loadCart();
+  alert(`${name} added to cart`);
 }
 function loadCart(){
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -95,7 +95,10 @@ function removeItem(index){
   loadCart();
 }
 function checkoutCart(){
-  alert("Checkout coming soon. You can Buy Now from product cards.");
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  if(cart.length === 0){alert("Your cart is empty."); return;}
+  let total = cart.reduce((sum,item)=>sum+item.price,0);
+  alert(`Total: GH₵${total}. Use "Buy Now" buttons to pay each product individually.`);
 }
 
 function payWithPaystack(productName,amount){
@@ -108,7 +111,8 @@ function payWithPaystack(productName,amount){
     currency:"GHS",
     callback:function(){
       alert(`${productName} purchased successfully!`);
-      window.location.href="customer.html";
+      // Optional: redirect to a confirmation page
+      // window.location.href="customer.html";
     },
     onClose:function(){alert("Payment cancelled");}
   });
