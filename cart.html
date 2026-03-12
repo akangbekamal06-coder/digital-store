@@ -1,20 +1,36 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-<title>Cart</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart - Digital Hub Store</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
-
 <body>
 
-<h1>Your Cart</h1>
+<header>Your Cart</header>
 
-<div id="cart-items"></div>
-<h3 id="cart-total"></h3>
+<div class="container">
+  <div id="cart-items"></div>
+  <div class="cart-total">Total: GH₵<span id="cart-total">0</span></div>
+  <button class="btn" onclick="checkout()">Checkout</button>
+</div>
 
-<a href="index.html">Continue Shopping</a>
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <h3>Enter Your Details</h3>
+    <input type="text" id="customerName" placeholder="Full Name" required>
+    <input type="email" id="customerEmail" placeholder="Email" required>
+    <input type="tel" id="customerPhone" placeholder="Phone Number" required>
+    <button class="btn" onclick="payCart()">Pay Now</button>
+    <button class="btn cancel" onclick="closePaymentModal()">Cancel</button>
+  </div>
+</div>
 
-<script src="js/cart.js"></script>
+<a class="whatsapp-float" href="https://wa.me/233509329683" target="_blank">Chat</a>
 
+<script src="cart.js"></script>
 </body>
 </html>
