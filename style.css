@@ -1,63 +1,51 @@
 body{
-font-family: Arial, sans-serif;
-background:#f4f6f9;
+font-family: Arial;
+background:#f4f4f4;
 margin:0;
 text-align:center;
 }
 
 h1{
-background:#111;
+background:black;
 color:white;
 padding:20px;
 margin:0;
 }
 
 nav{
-background:#333;
-padding:12px;
+margin:20px;
 }
 
 nav a{
-color:white;
 margin:10px;
 text-decoration:none;
 font-weight:bold;
-}
-
-nav a:hover{
-color:#00ffc8;
+color:black;
 }
 
 .product{
 background:white;
+display:inline-block;
 padding:20px;
 margin:20px;
-border-radius:12px;
-display:inline-block;
-width:260px;
-box-shadow:0 4px 15px rgba(0,0,0,0.15);
-transition:0.3s;
-}
-
-.product:hover{
-transform:scale(1.05);
+width:220px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 .product img{
-width:100%;
-border-radius:10px;
+width:120px;
+height:auto;
+margin-bottom:10px;
 }
 
 button{
 padding:10px 20px;
-background:#111;
+background:black;
 color:white;
 border:none;
-border-radius:6px;
+border-radius:5px;
 cursor:pointer;
-margin-top:10px;
 }
 
-button:hover{
-background:#444;
-}
+button:hover
