@@ -8,160 +8,7 @@
 <link rel="stylesheet" href="style.css">
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
-<style>
-
-/* HEADER */
-
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 20px;
-background:#0f172a;
-color:white;
-font-size:20px;
-}
-
-.logo{
-font-weight:bold;
-}
-
-.cart-btn{
-background:#22c55e;
-border:none;
-padding:8px 15px;
-color:white;
-border-radius:5px;
-cursor:pointer;
-}
-
-/* HERO */
-
-.hero{
-text-align:center;
-padding:50px 20px;
-background:#111827;
-color:white;
-}
-
-.hero h1{
-font-size:36px;
-margin-bottom:10px;
-}
-
-.hero p{
-font-size:18px;
-color:#cbd5f5;
-}
-
-/* HAMBURGER */
-
-#hamburger{
-position:fixed;
-top:70px;
-left:10px;
-cursor:pointer;
-}
-
-#hamburger span{
-display:block;
-width:25px;
-height:3px;
-background:black;
-margin:5px;
-}
-
-/* MENU */
-
-.menu{
-display:none;
-position:fixed;
-top:100px;
-left:10px;
-background:white;
-padding:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-.menu button{
-display:block;
-margin:5px 0;
-width:150px;
-padding:8px;
-border:none;
-background:#0f172a;
-color:white;
-cursor:pointer;
-}
-
-/* PRODUCTS */
-
-.products{
-display:flex;
-flex-wrap:wrap;
-gap:20px;
-justify-content:center;
-padding:20px;
-}
-
-/* WHATSAPP */
-
-.whatsapp-float{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#25D366;
-color:white;
-padding:12px 18px;
-border-radius:30px;
-text-decoration:none;
-font-weight:bold;
-}
-
-/* SUPPORT BOX */
-
-.support-box{
-display:none;
-position:fixed;
-bottom:80px;
-right:20px;
-width:260px;
-background:white;
-border-radius:8px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-.support-header{
-background:#0f172a;
-color:white;
-padding:10px;
-display:flex;
-justify-content:space-between;
-}
-
-.support-content{
-padding:10px;
-}
-
-.support-content textarea{
-width:100%;
-height:60px;
-margin-top:5px;
-}
-
-/* ABOUT */
-
-.description{
-background:#f5f5f5;
-padding:40px;
-text-align:center;
-line-height:1.6;
-}
-
-</style>
-
 </head>
-
 <body>
 
 <header>
@@ -170,14 +17,12 @@ line-height:1.6;
 </header>
 
 <!-- WELCOME SECTION -->
-
 <section class="hero">
 <h1>Welcome to Digital Hub Store</h1>
 <p>Your trusted store for VPN accounts, Netflix accounts, TextNow numbers and affordable data bundles.</p>
 </section>
 
 <!-- Hamburger Menu -->
-
 <div id="hamburger" onclick="toggleMenu()">
 <span></span>
 <span></span>
@@ -185,85 +30,48 @@ line-height:1.6;
 </div>
 
 <div id="menu" class="menu">
-
-<button onclick="selectCategory('netflix')">Netflix Accounts</button>
-
-<button onclick="selectCategory('nordvpn')">NordVPN Accounts</button>
-
-<button onclick="selectCategory('piavpn')">PIA VPN Accounts</button>
-
-<button onclick="selectCategory('spotify')">Spotify Accounts</button>
-
-<button onclick="selectCategory('textvoice')">TextNow / TextFree Numbers</button>
-
-<button onclick="selectCategory('data')">Data Bundles</button>
-
-<button onclick="goSupport()">Support</button>
-
+  <button onclick="selectCategory('netflix')">Netflix Accounts</button>
+  <button onclick="selectCategory('nordvpn')">NordVPN Accounts</button>
+  <button onclick="selectCategory('piavpn')">PIA VPN Accounts</button>
+  <button onclick="selectCategory('spotify')">Spotify Accounts</button>
+  <button onclick="selectCategory('textvoice')">TextNow / TextFree Numbers</button>
+  <button onclick="selectCategory('data')">Data Bundles</button>
+  <button onclick="goSupport()">Support</button>
 </div>
 
 <div class="container">
-
-<div id="header-title">All Products</div>
-
-<div class="products" id="products"></div>
-
+  <div id="header-title">All Products</div>
+  <div class="products" id="products"></div>
 </div>
 
 <!-- WhatsApp Button -->
-
 <a class="whatsapp-float" href="https://wa.me/233509329683" target="_blank">
 💬 Chat on WhatsApp
 </a>
 
 <!-- Support Box -->
-
 <div id="supportBox" class="support-box">
-
-<div class="support-header">
-Support
-<span onclick="closeSupportBox()">×</span>
-</div>
-
-<div class="support-content">
-
-<p>Email: support@digitalhubstore.com</p>
-
-<p>WhatsApp: +233 509 329 683</p>
-
-<textarea placeholder="Your message..." id="supportMessage"></textarea>
-
-<button onclick="sendSupportMessage()">Send</button>
-
-</div>
-
+  <div class="support-header">
+    Support
+    <span onclick="closeSupportBox()">×</span>
+  </div>
+  <div class="support-content">
+    <p>Email: support@digitalhubstore.com</p>
+    <p>WhatsApp: +233 509 329 683</p>
+    <textarea placeholder="Your message..." id="supportMessage"></textarea>
+    <button onclick="sendSupportMessage()">Send</button>
+  </div>
 </div>
 
 <!-- ABOUT -->
-
 <div class="description">
-
 <h3>About Digital Hub Store</h3>
-
-<p>
-Digital Hub Store is a trusted marketplace where you can buy premium digital accounts easily and securely.
-</p>
-
-<p>
-We provide verified VPN accounts, Netflix subscriptions, Spotify accounts,
-TextNow and TextFree numbers, and affordable data bundles.
-</p>
-
-<p>
-All products are delivered quickly after payment and our support team is always ready to help.
-</p>
-
+<p>Digital Hub Store is a trusted marketplace where you can buy premium digital accounts easily and securely.</p>
+<p>We provide verified VPN accounts, Netflix subscriptions, Spotify accounts, TextNow and TextFree numbers, and affordable data bundles.</p>
+<p>All products are delivered quickly after payment and our support team is always ready to help.</p>
 <h4>Support Contacts</h4>
-
 <p>Email: support@digitalhubstore.com</p>
-
 <p>WhatsApp: +233 509 329 683</p>
-
 </div>
 
 <script src="store.js"></script>
