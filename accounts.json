@@ -1,0 +1,7 @@
+{
+ "1 MONTH NETFLIX ACCOUNT":[{"username":"netflix1@mail.com","password":"pass123","used":false}],
+ "NORD VPN 1 MONTH ACCOUNT":[{"username":"nord1","password":"vpn123","used":false}],
+ "PIA VPN 1 MONTH ACCOUNT":[{"username":"pia1","password":"piapass","used":false}],
+ "TEXTFREE ACCOUNT":[{"username":"textfree1@mail.com","password":"txt123","used":false}],
+ "TEXTNOW ACCOUNT":[{"username":"textnow1@mail.com","password":"txt456","used":false}]
+}
