@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Receipt</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Order Receipt</h2>
+<p><strong>Order Ref:</strong> <span id="orderRef"></span></p>
+<p><strong>Name:</strong> <span id="customerName"></span></p>
+<p><strong>Email:</strong> <span id="customerEmail"></span></p>
+<p><strong>Phone:</strong> <span id="customerPhone"></span></p>
+<h3>Order Items:</h3>
+<ul id="orderList"></ul>
+<p><strong>Total Paid:</strong> GHC <span id="orderTotal"></span></p>
+
+<script>
+const cart=JSON.parse(localStorage.getItem('cart'))||[];
+const ref=localStorage.getItem('lastPaymentRef');
+document.getElementById('orderRef').textContent=ref;
+document.getElementById('customerName').textContent=localStorage.getItem('checkoutName');
+document.getElementById('customerEmail').textContent=localStorage.getItem('checkoutEmail');
+document.getElementById('customerPhone').textContent=localStorage.getItem('checkoutPhone');
+
+let total=0;
+const orderList=document.getElementById('orderList');
+cart.forEach(item=>{
+  const li=document.createElement('li');
+  li.textContent=`${item.item} - GHC ${item.price}`;
+  orderList.appendChild(li);
+  total+=item.price;
+});
+document.getElementById('orderTotal').textContent=total;
+
+// WhatsApp notification to store owner
+const waMessage=`New Order!\nCustomer: ${localStorage.getItem('checkoutName')}\nEmail: ${localStorage.getItem('checkoutEmail')}\nPhone: ${localStorage.getItem('checkoutPhone')}\nOrder Ref: ${ref}\nItems:\n`+
+cart.map(c=>`${c.item} - GHC ${c.price}`).join('\n');
+window.open(`https://wa.me/233509329683?text=${encodeURIComponent(waMessage)}`,'_blank');
+
+localStorage.removeItem('cart');
+</script>
+
+</body>
+</html>
