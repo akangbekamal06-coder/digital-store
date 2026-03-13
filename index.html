@@ -5,6 +5,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Hub Store</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* Mini-cart hover effect and icon improvements */
+.cart-wrapper{
+  position:relative;
+  cursor:pointer;
+}
+.cart-wrapper img{
+  width:45px;
+  transition: transform 0.2s;
+}
+.cart-wrapper img:hover{
+  transform: scale(1.1);
+}
+#cartCount{
+  position:absolute;
+  top:-8px;
+  right:-8px;
+  background:red;
+  color:white;
+  width:22px;
+  height:22px;
+  font-size:12px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:bold;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3);
+}
+#miniCart{
+  display:none;
+  position:absolute;
+  right:0;
+  top:55px;
+  width:320px;
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.25);
+  padding:15px;
+  max-height:400px;
+  overflow-y:auto;
+  z-index:1000;
+}
+.cart-wrapper:hover #miniCart{
+  display:block;
+}
+#miniCart h4{
+  margin-top:0;
+  font-size:16px;
+  border-bottom:1px solid #ccc;
+  padding-bottom:5px;
+  margin-bottom:10px;
+}
+#miniCart button{
+  width:100%;
+  padding:10px;
+  background:#ff4b4b;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:10px;
+}
+#miniCart button:hover{
+  background:#e03e3e;
+}
+</style>
 </head>
 <body>
 
@@ -18,7 +86,8 @@
     <a href="#">Messaging</a>
   </nav>
   <div class="cart-wrapper">
-    <img src="images/cart-icon.png" alt="Cart" id="cartIcon">
+    <!-- Updated Cart Icon: fallback if local image missing -->
+    <img src="https://img.icons8.com/ios-filled/50/ff4b4b/shopping-cart.png" alt="Cart" id="cartIcon">
     <span id="cartCount">0</span>
     <div id="miniCart">
       <h4>Cart Items</h4>
