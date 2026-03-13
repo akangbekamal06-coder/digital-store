@@ -1,0 +1,27 @@
+/* General Styles */
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#f5f5f5;}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 20px;background:#fff;position:sticky;top:0;z-index:1000;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+header .logo{font-weight:bold;font-size:20px;}
+.cart-wrapper{position:relative;}
+.cart-wrapper img{width:40px;cursor:pointer;}
+#cartCount{position:absolute;top:-5px;right:-5px;background:red;color:white;width:20px;height:20px;font-size:12px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+#miniCart{display:none;position:absolute;right:0;top:50px;width:300px;background:#fff;border:1px solid #ccc;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,0.2);padding:10px;max-height:400px;overflow-y:auto;z-index:1000;}
+.products-list{max-width:700px;margin:20px auto;padding:0;}
+.product-card{display:flex;align-items:center;justify-content:space-between;background:#fff;padding:15px;margin-bottom:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.1);flex-wrap:wrap;}
+.product-info{display:flex;align-items:center;flex:1;}
+.product-info img{width:50px;height:50px;object-fit:cover;border-radius:6px;margin-right:15px;}
+.product-details{display:flex;flex-direction:column;}
+.product-details a{font-size:12px;color:#007bff;text-decoration:none;margin-top:2px;}
+.product-price-stock{display:flex;flex-direction:column;align-items:flex-end;font-size:14px;margin-left:10px;}
+.product-price-stock .stock{color:green;font-weight:bold;margin-bottom:5px;}
+.purchase-btn{background:#ff4b4b;color:white;border:none;border-radius:6px;padding:10px 15px;cursor:pointer;font-size:14px;}
+
+/* Footer Styles */
+footer{background:#333;color:white;padding:20px;margin-top:40px;text-align:center;border-top:4px solid #ff4b4b;}
+footer a{color:#ff4b4b;text-decoration:none;}
+
+/* Responsive */
+@media(max-width:500px){
+  .product-card{flex-direction:column;align-items:flex-start;}
+  .product-price-stock{align-items:flex-start;margin-left:0;margin-top:10px;}
+}
