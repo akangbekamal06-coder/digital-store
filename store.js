@@ -1,4 +1,4 @@
-// LIST OF PRODUCTS
+// PRODUCTS
 const products = [
 {name:"EXPRESS VPN 1 MONTH", price:35, stock:10, image:"images/express-vpn.png"},
 {name:"EXPRESS VPN 3 MONTHS", price:50, stock:10, image:"images/express-vpn.png"},
@@ -34,27 +34,23 @@ const products = [
 {name:"TEXTFREE ACCOUNT", price:20, stock:20, image:"images/textfree.png"}
 ];
 
-// DYNAMICALLY RENDER PRODUCTS
-function renderProducts() {
+// RENDER PRODUCTS
+function renderProducts(){
   const container = document.querySelector(".products-list");
-  container.innerHTML = "";
-  products.forEach(p => {
+  container.innerHTML="";
+  products.forEach(p=>{
     const div = document.createElement("div");
     div.className = "product-card";
     div.innerHTML = `
       <div class="product-info">
         <img src="${p.image}" alt="${p.name}">
-        <div class="product-details">
-          <span>${p.name}</span>
-          <a href="#">View details</a>
-        </div>
+        <div class="product-details"><span>${p.name}</span><a href="#">View details</a></div>
       </div>
       <div class="product-price-stock">
         <span class="price">${p.price}GHC</span>
         <span class="stock">${p.stock} pcs</span>
         <button class="purchase-btn" onclick="buyNow('${p.name}',${p.price})">Purchase</button>
-      </div>
-    `;
+      </div>`;
     container.appendChild(div);
   });
 }
@@ -64,7 +60,7 @@ function updateMiniCart(){
   const cart=JSON.parse(localStorage.getItem('cart'))||[];
   document.getElementById('cartCount').textContent=cart.length;
   const miniCartItems=document.getElementById('miniCartItems');
-  miniCartItems.innerHTML='';
+  miniCartItems.innerHTML="";
   let total=0;
   cart.forEach(item=>{
     const div=document.createElement('div');
@@ -78,6 +74,7 @@ function updateMiniCart(){
   document.getElementById('miniCartTotal').textContent=total;
 }
 
+// BUY NOW
 function buyNow(name, price){
   const cart=[{item:name, price:price}];
   localStorage.setItem('cart', JSON.stringify(cart));
