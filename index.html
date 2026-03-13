@@ -5,83 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Hub Store</title>
 <link rel="stylesheet" href="style.css">
-<style>
-/* SIDE CART STYLES */
-#sideCart {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 350px;
-  height: 100%;
-  background: #fff;
-  box-shadow: -4px 0 20px rgba(0,0,0,0.25);
-  z-index: 2000;
-  transition: right 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-#sideCartHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-#sideCartHeader h3 {
-  margin: 0;
-  font-size: 18px;
-}
-
-#closeSideCart {
-  cursor: pointer;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-#sideCartItems {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 10px;
-}
-
-#sideCartItems div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.remove-btn {
-  background: #ff4b4b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 12px;
-  padding: 3px 7px;
-  cursor: pointer;
-}
-
-.remove-btn:hover {
-  background: #e03e3e;
-}
-
-#sideCart button.checkout-btn {
-  width: 100%;
-  padding: 10px;
-  background: #ff4b4b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#sideCart button.checkout-btn:hover {
-  background: #e03e3e;
-}
-</style>
 </head>
 <body>
 
@@ -89,10 +12,10 @@
 <header>
   <div class="logo">Digital Hub Store</div>
   <nav>
-    <a href="#">VPN</a>
-    <a href="#">Data</a>
-    <a href="#">Accounts</a>
-    <a href="#">Messaging</a>
+    <a href="#" data-category="VPN">VPN</a>
+    <a href="#" data-category="Data">Data</a>
+    <a href="#" data-category="Accounts">Accounts</a>
+    <a href="#" data-category="Messaging">Messaging</a>
   </nav>
   <div class="cart-wrapper">
     <img src="https://img.icons8.com/ios-filled/50/ff4b4b/shopping-cart.png" alt="Cart" id="cartIcon">
@@ -108,7 +31,7 @@
   </div>
   <div id="sideCartItems"></div>
   <div style="font-weight:bold;margin-top:10px;">Total: GHC <span id="sideCartTotal">0</span></div>
-  <button class="checkout-btn" onclick="goToCheckout()">Checkout</button>
+  <button onclick="goToCheckout()">Checkout</button>
 </div>
 
 <!-- HERO SECTION -->
@@ -123,25 +46,20 @@
 <!-- FOOTER -->
 <footer>
 <h3>Customer Support</h3>
-<p>Welcome to Digital Hub Store! We provide VPNs, data bundles, Gmail & Google Voice accounts, and other digital products. Enjoy safe, fast, and reliable services.</p>
-<p><strong>Phone:</strong> 0509329683</p>
+<p>Welcome to Digital Hub Store! We provide VPNs, data bundles, Gmail & Google Voice accounts, Netflix accounts, and other digital products. Enjoy safe, fast, and reliable services.</p>
+<p><strong>WhatsApp:</strong> <a href="https://wa.me/0533209931" target="_blank">0533209931</a></p>
 <p><strong>Email:</strong> <a href="mailto:digitalhubghsupport@gmail.com">digitalhubghsupport@gmail.com</a></p>
 </footer>
 
+<!-- FLOATING BUTTONS -->
+<a href="https://wa.me/0533209931" target="_blank" id="whatsappBtn" title="Chat on WhatsApp">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp">
+</a>
+
+<a href="#" target="_blank" id="supportBtn" title="Live Support">
+  <img src="https://img.icons8.com/ios-filled/50/ffffff/topic.png" alt="Support">
+</a>
+
 <script src="store.js"></script>
-<script>
-// SIDE CART TOGGLE
-const sideCart = document.getElementById('sideCart');
-const cartIcon = document.getElementById('cartIcon');
-const closeSideCart = document.getElementById('closeSideCart');
-
-cartIcon.addEventListener('click', () => {
-  sideCart.style.right = '0';
-});
-
-closeSideCart.addEventListener('click', () => {
-  sideCart.style.right = '-100%';
-});
-</script>
 </body>
 </html>
