@@ -34,7 +34,7 @@ const products = [
   {name:"TEXTFREE ACCOUNT", price:20, stock:20, image:"images/textfree.png", category:"Messaging"}
 ];
 
-// FILTER + RENDER
+// RENDER PRODUCTS WITH FILTER
 function renderProducts(category="all"){
   const container=document.querySelector(".products-list");
   container.innerHTML="";
@@ -48,24 +48,76 @@ function renderProducts(category="all"){
   });
 }
 
-// CART + SIDE CART FUNCTIONS
-function addToCart(name,price){let cart=JSON.parse(localStorage.getItem('cart'))||[];cart.push({item:name,price:price});localStorage.setItem('cart',JSON.stringify(cart));updateSideCart();alert(`${name} added to cart!`);}
-function updateSideCart(){const cart=JSON.parse(localStorage.getItem('cart'))||[];document.getElementById('cartCount').textContent=cart.length;const container=document.getElementById('sideCartItems');container.innerHTML="";let total=0;cart.forEach((item,index)=>{const div=document.createElement('div');div.style.display='flex';div.style.justifyContent='space-between';div.style.alignItems='center';div.style.marginBottom='5px';const itemText=document.createElement('span');itemText.textContent=`${item.item} - GHC ${item.price}`;const removeBtn=document.createElement('button');removeBtn.textContent='Remove';removeBtn.className='remove-btn';removeBtn.style.fontSize='12px';removeBtn.style.padding='3px 7px';removeBtn.addEventListener('click',()=>{removeFromCart(index);updateSideCart();});div.appendChild(itemText);div.appendChild(removeBtn);container.appendChild(div);total+=item.price;});document.getElementById('sideCartTotal').textContent=total;}
-function removeFromCart(index){let cart=JSON.parse(localStorage.getItem('cart'))||[];cart.splice(index,1);localStorage.setItem('cart',JSON.stringify(cart);}
-function buyNow(name,price){const cart=[{item:name,price:price}];localStorage.setItem('cart',JSON.stringify(cart));updateSideCart();window.location.href='checkout.html';}
-function goToCheckout(){window.location.href='checkout.html';}
-
-// INITIALIZE
-document.addEventListener("DOMContentLoaded",()=>{
-  renderProducts();
+// CART FUNCTIONS
+function addToCart(name,price){
+  let cart=JSON.parse(localStorage.getItem('cart'))||[];
+  cart.push({item:name,price:price});
+  localStorage.setItem('cart',JSON.stringify(cart));
   updateSideCart();
+  alert(`${name} added to cart!`);
+}
+
+function updateSideCart(){
+  const cart=JSON.parse(localStorage.getItem('cart'))||[];
+  document.getElementById('cartCount').textContent=cart.length;
+  const container=document.getElementById('sideCartItems');
+  container.innerHTML="";
+  let total=0;
+  cart.forEach((item,index)=>{
+    const div=document.createElement('div');
+    div.style.display='flex';
+    div.style.justifyContent='space-between';
+    div.style.alignItems='center';
+    div.style.marginBottom='5px';
+
+    const itemText=document.createElement('span');
+    itemText.textContent=`${item.item} - GHC ${item.price}`;
+
+    const removeBtn=document.createElement('button');
+    removeBtn.textContent='Remove';
+    removeBtn.className='remove-btn';
+    removeBtn.style.fontSize='12px';
+    removeBtn.style.padding='3px 7px';
+    removeBtn.addEventListener('click',()=>{ removeFromCart(index); updateSideCart(); });
+
+    div.appendChild(itemText);
+    div.appendChild(removeBtn);
+    container.appendChild(div);
+
+    total+=item.price;
+  });
+  document.getElementById('sideCartTotal').textContent=total;
+}
+
+function removeFromCart(index){
+  let cart=JSON.parse(localStorage.getItem('cart'))||[];
+  cart.splice(index,1);
+  localStorage.setItem('cart',JSON.stringify(cart));
+}
+
+function buyNow(name,price){
+  const cart=[{item:name,price:price}];
+  localStorage.setItem('cart',JSON.stringify(cart));
+  updateSideCart();
+  window.location.href='checkout.html';
+}
+
+function goToCheckout(){ window.location.href='checkout.html'; }
+
+// FILTER NAV LINKS
+document.addEventListener("DOMContentLoaded",()=>{
+  renderProducts("all"); // Show all initially
+  updateSideCart();
+
   document.querySelectorAll('nav a').forEach(link=>{
     link.addEventListener('click',e=>{
       e.preventDefault();
-      renderProducts(link.getAttribute('data-category'));
+      const cat=link.getAttribute('data-category');
+      renderProducts(cat);
     });
   });
+
   const sideCart=document.getElementById('sideCart');
-  document.getElementById('cartIcon').addEventListener('click',()=>{sideCart.style.right='0';updateSideCart();});
+  document.getElementById('cartIcon').addEventListener('click',()=>{sideCart.style.right='0'; updateSideCart();});
   document.getElementById('closeSideCart').addEventListener('click',()=>{sideCart.style.right='-100%';});
 });
