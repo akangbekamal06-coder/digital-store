@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digital Hub Store - Checkout</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <h2>Checkout</h2>
 <form id="checkoutForm">
   <label>Full Name</label>
@@ -18,37 +20,17 @@
 </form>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
+<script src="store.js"></script>
 <script>
-document.getElementById('checkoutForm').addEventListener('submit',function(e){
+document.getElementById('checkoutForm').addEventListener('submit', function(e){
   e.preventDefault();
-  const cart=JSON.parse(localStorage.getItem('cart'))||[];
-  if(cart.length===0){alert("Cart is empty!");return;}
-  let totalAmount=0; cart.forEach(i=>totalAmount+=i.price);
-  const fname=document.getElementById('fname').value;
-  const email=document.getElementById('email').value;
-  const phone=document.getElementById('phone').value;
-
-  const handler=PaystackPop.setup({
-    key:'pk_live_76e7df83f71c725b7e10d514b3c935324a97761e',
-    email:email,
-    amount:totalAmount*100,
-    currency:'GHS',
-    ref:'DH-'+Math.floor(Math.random()*1000000),
-    metadata:{custom_fields:[
-      {display_name:"Customer Name",value:fname},
-      {display_name:"Phone",value:phone},
-      {display_name:"Order Details",value:JSON.stringify(cart)}
-    ]},
-    callback:function(response){
-      localStorage.setItem('lastPaymentRef',response.reference);
-      localStorage.setItem('checkoutName',fname);
-      localStorage.setItem('checkoutEmail',email);
-      localStorage.setItem('checkoutPhone',phone);
-      window.location.href='success.html';
-    },
-    onClose:function(){alert('Payment not completed');}
-  });
-  handler.openIframe();
+  const cart = JSON.parse(localStorage.getItem('cart'))||[];
+  if(cart.length===0){alert("Cart is empty!"); return;}
+  let total=0; cart.forEach(item=>total+=item.price);
+  const fname = document.getElementById('fname').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  payWithPaystack(fname,email,phone,total);
 });
 </script>
 </body>
