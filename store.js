@@ -80,7 +80,7 @@ function buyNow(name, price){
   localStorage.setItem('cart', JSON.stringify(cart));
   updateMiniCart();
   window.location.href='checkout.html';
-}
+} 
 
 function goToCheckout(){window.location.href='checkout.html';}
 
