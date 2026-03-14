@@ -5,20 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout - Digital Hub Store</title>
 <script src="store.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; padding:20px; }
+  h1 { color:#333; }
+  .instructions { background:#f0f0f0; padding:15px; border-radius:8px; margin-bottom:20px; }
+  .instructions p { margin:5px 0; }
+  .charge { color:red; font-weight:bold; }
+  .momo-number { font-weight:bold; color:#d35400; } /* Telecel number highlighted */
+  #whatsappBtn { display:inline-block; margin-top:20px; padding:15px 40px; background-color:#25D366; color:white; text-decoration:none; font-size:18px; border-radius:10px; }
+</style>
 </head>
 <body>
 <h1>Checkout</h1>
 
 <p>Your Order ID: <span id="orderID"></span></p>
 
-<p>Send payment via MoMo to <strong>054XXXXXXX</strong></p>
 <p>Total Amount: GHC <span id="amount"></span></p>
-<p>Use your Order ID as the payment reference.</p>
+<p class="charge">*Add 0.50 GHC for MoMo transaction charges when making payment*</p>
 
-<a id="whatsappBtn" href="#" 
-   style="padding:20px 40px; background-color:#25D366; color:white; text-decoration:none; font-size:18px; border-radius:10px;">
-   Payment Done → WhatsApp
-</a>
+<!-- PAYMENT INSTRUCTIONS -->
+<div class="instructions">
+  <h3>How to Pay</h3>
+  <p>1. Open your <strong>Mobile Money (MoMo)</strong> app.</p>
+  <p>2. Send the total amount <strong>+ 0.50 GHC</strong> to <span class="momo-number">Telecel Number: 05409329683</span>.</p>
+  <p>3. Enter your <strong>Order ID</strong> as the payment reference.</p>
+  <p>4. After paying, click the <strong>“Payment Done → WhatsApp”</strong> button below to confirm.</p>
+</div>
+
+<!-- WHATSAPP BUTTON -->
+<a id="whatsappBtn" href="#">Payment Done → WhatsApp</a>
 
 <script>
   // Display Order ID
@@ -27,8 +42,11 @@
 
   // Calculate total from cart
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const total = cart.reduce((acc, item) => acc + item.price, 0);
-  document.getElementById('amount').innerText = total;
+  let total = cart.reduce((acc, item) => acc + item.price, 0);
+
+  // Add 0.50 GHC transaction charge
+  total += 0.50;
+  document.getElementById('amount').innerText = total.toFixed(2);
 
   // Set WhatsApp button link
   const productNames = cart.map(item => item.item).join(", ");
