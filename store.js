@@ -1,4 +1,36 @@
+// ----------------------------
+// ORDER ID FUNCTIONS
+// ----------------------------
+function generateOrderID() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let id = '';
+    for (let i = 0; i < 8; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return id;
+}
+
+function storeOrderID() {
+    const orderID = generateOrderID();
+    localStorage.setItem('orderID', orderID);
+    return orderID;
+}
+
+function getOrderID() {
+    return localStorage.getItem('orderID') || storeOrderID();
+}
+
+function getWhatsAppLink(whatsappNumber, productName) {
+    const orderID = getOrderID();
+    const encodedMessage = encodeURIComponent(
+        `Hello, I have paid for ${productName} with Order ID ${orderID}`
+    );
+    return `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+}
+
+// ----------------------------
 // ALL PRODUCTS WITH CATEGORIES
+// ----------------------------
 const products = [
   {name:"EXPRESS VPN 1 MONTH", price:35, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
   {name:"EXPRESS VPN 3 MONTHS", price:50, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
@@ -34,7 +66,9 @@ const products = [
   {name:"TEXTFREE ACCOUNT", price:20, stock:20, image:"images/textfree.png", category:"Messaging"}
 ];
 
+// ----------------------------
 // RENDER PRODUCTS WITH CATEGORY FILTER
+// ----------------------------
 function renderProducts(category="all"){
   const container=document.querySelector(".products-list");
   container.innerHTML="";
@@ -64,7 +98,9 @@ function renderProducts(category="all"){
   });
 }
 
+// ----------------------------
 // CART FUNCTIONS
+// ----------------------------
 function addToCart(name,price){
   let cart=JSON.parse(localStorage.getItem('cart'))||[];
   cart.push({item:name,price:price});
@@ -116,12 +152,18 @@ function buyNow(name,price){
   const cart=[{item:name,price:price}];
   localStorage.setItem('cart',JSON.stringify(cart));
   updateSideCart();
+
+  // Generate Order ID
+  storeOrderID();
+
   window.location.href='checkout.html';
 }
 
 function goToCheckout(){ window.location.href='checkout.html'; }
 
+// ----------------------------
 // FILTER NAV LINKS
+// ----------------------------
 document.addEventListener("DOMContentLoaded",()=>{
   renderProducts("all");
   updateSideCart();
