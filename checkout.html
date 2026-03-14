@@ -4,109 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout - Digital Hub Store</title>
-<link rel="stylesheet" href="style.css">
-<style>
-/* CHECKOUT PAGE STYLES */
-.checkout-container {
-  max-width: 500px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-.checkout-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #ff4b4b;
-}
-.checkout-container label {
-  display: block;
-  margin-top: 15px;
-  font-weight: bold;
-}
-.checkout-container input, 
-.checkout-container textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-.checkout-container button {
-  margin-top: 20px;
-  width: 100%;
-  padding: 12px;
-  background: #ff4b4b;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-.checkout-container button:hover {
-  background: #e03e3e;
-}
-#checkoutItems div {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 15px;
-}
-</style>
+<script src="store.js"></script>
 </head>
 <body>
+<h1>Checkout</h1>
 
-<div class="checkout-container">
-  <h2>Digital Hub Store - Checkout</h2>
+<p>Your Order ID: <span id="orderID"></span></p>
 
-  <div id="checkoutItems"></div>
-  <div style="font-weight:bold;margin-top:10px;">Total: GHC <span id="checkoutTotal">0</span></div>
+<p>Send payment via MoMo to <strong>054XXXXXXX</strong></p>
+<p>Total Amount: GHC <span id="amount"></span></p>
+<p>Use your Order ID as the payment reference.</p>
 
-  <label for="firstName">Your Name</label>
-  <input type="text" id="firstName" placeholder="First name">
-
-  <label for="lastName"></label>
-  <input type="text" id="lastName" placeholder="Last name">
-
-  <label for="email">Your Email Address</label>
-  <input type="email" id="email" placeholder="you@mail.com">
-
-  <label for="phone">Your Phone Number</label>
-  <input type="text" id="phone" placeholder="+233 ...">
-
-  <label for="notes"> (Optional)</label>
-  <input type="text" id="notes" placeholder="Optional">
-
-  <button id="payBtn">Review and Pay</button>
-  <button onclick="window.history.back()">Back</button>
-</div>
+<a id="whatsappBtn" href="#" 
+   style="padding:20px 40px; background-color:#25D366; color:white; text-decoration:none; font-size:18px; border-radius:10px;">
+   Payment Done → WhatsApp
+</a>
 
 <script>
-function loadCheckout() {
+  // Display Order ID
+  const orderID = getOrderID();
+  document.getElementById('orderID').innerText = orderID;
+
+  // Calculate total from cart
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const container = document.getElementById('checkoutItems');
-  let total = 0;
-  container.innerHTML = "";
+  const total = cart.reduce((acc, item) => acc + item.price, 0);
+  document.getElementById('amount').innerText = total;
 
-  cart.forEach(item => {
-    const div = document.createElement('div');
-    div.textContent = `${item.item} - GHC ${item.price}`;
-    container.appendChild(div);
-    total += item.price;
-  });
-
-  document.getElementById('checkoutTotal').textContent = total;
-}
-
-document.addEventListener("DOMContentLoaded", loadCheckout);
-
-document.getElementById('payBtn').addEventListener('click', () => {
-  alert("This is a demo checkout. You can link a payment gateway here.");
-});
+  // Set WhatsApp button link
+  const productNames = cart.map(item => item.item).join(", ");
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  whatsappBtn.href = getWhatsAppLink('233509329683', productNames);
 </script>
-
 </body>
 </html>
