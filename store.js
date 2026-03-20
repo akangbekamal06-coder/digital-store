@@ -68,15 +68,15 @@ const products = [
   {name:"TEXTNOW ACCOUNT", price:25, stock:20, image:"images/textnow.png", category:"Messaging"},
   {name:"TEXTFREE ACCOUNT", price:20, stock:20, image:"images/textfree.png", category:"Messaging"},
 
-  // 🔥 PROXIES ADDED
-  {name:"9 PROXY REFILLS – 10 IPs", price:30, stock:20, image:"images/proxy-10ips.jpg", category:"Proxies"},
-  {name:"9 PROXY REFILLS – 20 IPs", price:60, stock:20, image:"images/proxy-20ips.jpg", category:"Proxies"},
-  {name:"9 PROXY REFILLS – 50 IPs", price:100, stock:20, image:"images/proxy-50ips.jpg", category:"Proxies"},
-  {name:"9 PROXY REFILLS – 150 IPs", price:300, stock:20, image:"images/proxy-150ips.jpg", category:"Proxies"}
+  // 🔥 PROXIES (ONE IMAGE)
+  {name:"9 PROXY REFILLS – 10 IPs", price:30, stock:20, image:"images/proxy.jpg", category:"Proxies"},
+  {name:"9 PROXY REFILLS – 20 IPs", price:60, stock:20, image:"images/proxy.jpg", category:"Proxies"},
+  {name:"9 PROXY REFILLS – 50 IPs", price:100, stock:20, image:"images/proxy.jpg", category:"Proxies"},
+  {name:"9 PROXY REFILLS – 150 IPs", price:300, stock:20, image:"images/proxy.jpg", category:"Proxies"}
 ];
 
 // ----------------------------
-// RENDER PRODUCTS WITH CATEGORY FILTER
+// RENDER PRODUCTS
 // ----------------------------
 function renderProducts(category="all"){
   const container=document.querySelector(".products-list");
@@ -161,17 +161,14 @@ function buyNow(name,price){
   const cart=[{item:name,price:price}];
   localStorage.setItem('cart',JSON.stringify(cart));
   updateSideCart();
-
-  // Generate Order ID
   storeOrderID();
-
   window.location.href='checkout.html';
 }
 
 function goToCheckout(){ window.location.href='checkout.html'; }
 
 // ----------------------------
-// FILTER NAV LINKS
+// INIT
 // ----------------------------
 document.addEventListener("DOMContentLoaded",()=>{
   renderProducts("all");
