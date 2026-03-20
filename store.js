@@ -49,9 +49,11 @@ const products = [
   {name:"CYBER GHOST VPN 6 MONTHS", price:50, stock:10, image:"images/cyberghost-vpn.jpg", category:"VPN"},
   {name:"CYBER GHOST VPN 2 YEARS", price:90, stock:10, image:"images/cyberghost-vpn.jpg", category:"VPN"},
   {name:"SURFSHARK VPN 1 MONTH", price:30, stock:10, image:"images/surfshark-vpn.jpg", category:"VPN"},
+
   {name:"GMAIL PHONE VERIFIED ACCOUNT", price:25, stock:10, image:"images/gmail.jpg", category:"Accounts"},
   {name:"GOOGLE VOICE ACCOUNT", price:40, stock:10, image:"images/google-voice.png", category:"Accounts"},
   {name:"NETFLIX 1 MONTH", price:25, stock:10, image:"images/netflix.png", category:"Accounts"},
+
   {name:"1GB MTN DATA BUNDLE", price:5, stock:100, image:"images/data-bundle.png", category:"Data"},
   {name:"2GB MTN DATA BUNDLE", price:10, stock:100, image:"images/data-bundle.png", category:"Data"},
   {name:"3GB MTN DATA BUNDLE", price:15, stock:100, image:"images/data-bundle.png", category:"Data"},
@@ -62,8 +64,15 @@ const products = [
   {name:"10GB MTN DATA BUNDLE", price:45, stock:100, image:"images/data-bundle.png", category:"Data"},
   {name:"15GB MTN DATA BUNDLE", price:65, stock:100, image:"images/data-bundle.png", category:"Data"},
   {name:"10GB TELECEL DATA BUNDLE", price:42, stock:100, image:"images/telecel.jpg", category:"Data"},
+
   {name:"TEXTNOW ACCOUNT", price:25, stock:20, image:"images/textnow.png", category:"Messaging"},
-  {name:"TEXTFREE ACCOUNT", price:20, stock:20, image:"images/textfree.png", category:"Messaging"}
+  {name:"TEXTFREE ACCOUNT", price:20, stock:20, image:"images/textfree.png", category:"Messaging"},
+
+  // 🔥 PROXIES ADDED
+  {name:"9 PROXY REFILLS – 10 IPs", price:30, stock:20, image:"images/proxy-10ips.jpg", category:"Proxies"},
+  {name:"9 PROXY REFILLS – 20 IPs", price:60, stock:20, image:"images/proxy-20ips.jpg", category:"Proxies"},
+  {name:"9 PROXY REFILLS – 50 IPs", price:100, stock:20, image:"images/proxy-50ips.jpg", category:"Proxies"},
+  {name:"9 PROXY REFILLS – 150 IPs", price:300, stock:20, image:"images/proxy-150ips.jpg", category:"Proxies"}
 ];
 
 // ----------------------------
