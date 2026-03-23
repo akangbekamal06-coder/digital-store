@@ -159,6 +159,11 @@ function goToCheckout(){
 // ----------------------------
 document.addEventListener("DOMContentLoaded", ()=>{
 
+// ----------------------------
+// CART OPEN / CLOSE (FIXED)
+// ----------------------------
+document.addEventListener("DOMContentLoaded", ()=>{
+
   renderProducts("all");
   updateSideCart();
 
@@ -166,15 +171,33 @@ document.addEventListener("DOMContentLoaded", ()=>{
   const cartIcon = document.getElementById('cartIcon');
   const closeBtn = document.getElementById('closeSideCart');
 
-  cartIcon.addEventListener('click', ()=>{
-    sideCart.style.right = '0';
-    updateSideCart();
+  // ✅ FIX: safer click (works on all phones)
+  if (cartIcon) {
+    cartIcon.onclick = function () {
+      sideCart.style.right = '0';
+      updateSideCart();
+    };
+  }
+
+  // ✅ FIX: close button
+  if (closeBtn) {
+    closeBtn.onclick = function () {
+      sideCart.style.right = '-100%';
+    };
+  }
+
+  // ✅ OPTIONAL FIX: close when clicking outside (nice UX)
+  document.addEventListener('click', function(e){
+    if (
+      sideCart.style.right === '0px' &&
+      !sideCart.contains(e.target) &&
+      e.target !== cartIcon
+    ){
+      sideCart.style.right = '-100%';
+    }
   });
 
-  closeBtn.addEventListener('click', ()=>{
-    sideCart.style.right = '-100%';
-  });
-
+  // CATEGORY FILTER
   document.querySelectorAll('nav a').forEach(link=>{
     link.addEventListener('click', e=>{
       e.preventDefault();
