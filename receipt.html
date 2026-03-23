@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Receipt</title>
+</head>
+<body>
+
+<h2>Payment Successful</h2>
+
+<p>Reference: <span id="ref"></span></p>
+<p>Email: <span id="email"></span></p>
+<p>Phone: <span id="phone"></span></p>
+
+<div id="items"></div>
+
+<h3>Total: GHC <span id="total"></span></h3>
+
+<button onclick="location.href='index.html'">Back</button>
+
+<script>
+let d=JSON.parse(localStorage.getItem("receipt"));
+
+if(d){
+ref.textContent=d.ref;
+email.textContent=d.email;
+phone.textContent=d.phone;
+total.textContent=d.total;
+
+d.cart.forEach(i=>{
+items.innerHTML+=`<p>${i.item} - GHC ${i.price}</p>`;
+});
+}
+</script>
+
+</body>
+</html>
