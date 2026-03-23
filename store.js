@@ -81,7 +81,7 @@ const products = [
 ];
 
 // ----------------------------
-// RENDER PRODUCTS (FIXED)
+// RENDER PRODUCTS
 // ----------------------------
 function renderProducts(category="all"){
 const container=document.querySelector(".products-list");
@@ -97,59 +97,59 @@ const div=document.createElement("div");
 div.className="product-card";
 
 div.innerHTML=`
+<div class="product-info">
+  <img src="${p.image}" alt="${p.name}">
+  <div class="product-details">
+    <span>${p.name}</span>
+    <a href="#">View details</a>
+  </div>
+</div>
 
-<div class="product-info">  
-  <img src="${p.image}" alt="${p.name}">  
-  <div class="product-details">  
-    <span>${p.name}</span>  
-    <a href="#">View details</a>  
-  </div>  
-</div>  <div class="product-price-stock">  
-  <span class="price">${p.price}GHC</span>  
-  <span class="stock">${p.stock} pcs</span>    <div style="display:flex;gap:10px;">  
-    <button class="purchase-btn" onclick="buyNow('${p.name}',${p.price})">Buy Now</button>  
-    <button class="purchase-btn add-cart-btn" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>  
-  </div>  
-</div>  
-`;  container.appendChild(div);
+<div class="product-price-stock">
+  <span class="price">${p.price}GHC</span>
+  <span class="stock">${p.stock} pcs</span>
+
+  <div style="display:flex;gap:10px;">
+    <button class="purchase-btn" onclick="buyNow('${p.name}',${p.price})">Buy Now</button>
+    <button class="purchase-btn add-cart-btn" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+  </div>
+</div>
+`;
+
+container.appendChild(div);
 });
 }
 
 // ----------------------------
-// CART FUNCTIONS (WORKING)
+// CART
 // ----------------------------
 function addToCart(name,price){
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
-
 cart.push({item:name,price:Number(price)});
-
 localStorage.setItem('cart',JSON.stringify(cart));
-
 updateSideCart();
-
-alert(${name} added to cart!);
+alert(`${name} added to cart!`);
 }
 
 function updateSideCart(){
 const cart=JSON.parse(localStorage.getItem('cart'))||[];
-
 document.getElementById('cartCount').textContent=cart.length;
 
 const container=document.getElementById('sideCartItems');
 container.innerHTML="";
-
 let total=0;
 
 cart.forEach((item,index)=>{
 const div=document.createElement('div');
-
 div.style.display='flex';
 div.style.justifyContent='space-between';
 
-div.innerHTML=  <span>${item.item} - GHC ${item.price}</span>   <button onclick="removeFromCart(${index})">Remove</button>  ;
+div.innerHTML=`
+<span>${item.item} - GHC ${item.price}</span>
+<button onclick="removeFromCart(${index})">Remove</button>
+`;
 
 container.appendChild(div);
-
 total += Number(item.price);
 });
 
@@ -168,13 +168,9 @@ updateSideCart();
 // ----------------------------
 function buyNow(name,price){
 const cart=[{item:name,price:Number(price)}];
-
 localStorage.setItem('cart',JSON.stringify(cart));
-
 updateSideCart();
-
 storeOrderID();
-
 window.location.href='checkout.html';
 }
 
@@ -186,7 +182,6 @@ window.location.href='checkout.html';
 // INIT
 // ----------------------------
 document.addEventListener("DOMContentLoaded",()=>{
-
 renderProducts("all");
 updateSideCart();
 
