@@ -1,6 +1,3 @@
-// ----------------------------
-// PRODUCTS (FULL + FIXED PRICES)
-// ----------------------------
 const products = [
 
 {name:"EXPRESS VPN 1 MONTH", price:45, image:"images/express-vpn.jpg", category:"VPN"},
@@ -52,150 +49,108 @@ const products = [
 
 ];
 
-// ----------------------------
-// RENDER PRODUCTS
-// ----------------------------
+// RENDER
 function renderProducts(category="all"){
-  const container=document.querySelector(".products-list");
-  container.innerHTML="";
+const container=document.querySelector(".products-list");
+container.innerHTML="";
 
-  let filtered = category==="all" ? products : products.filter(p=>p.category===category);
+let filtered = category==="all" ? products : products.filter(p=>p.category===category);
 
-  filtered.forEach(p=>{
-    const div=document.createElement("div");
-    div.className="product-card";
+filtered.forEach(p=>{
+container.innerHTML+=`
+<div class="product-card">
+<div class="product-info">
+<img src="${p.image}">
+<div class="product-details">
+<span>${p.name}</span>
+</div>
+</div>
 
-    div.innerHTML=`
-      <div class="product-info">
-        <img src="${p.image}">
-        <div class="product-details">
-          <span>${p.name}</span>
-        </div>
-      </div>
+<div class="product-price-stock">
+<span class="price">${p.price}GHC</span>
 
-      <div class="product-price-stock">
-        <span class="price">${p.price}GHC</span>
-
-        <div style="display:flex;gap:10px;">
-          <button class="purchase-btn" onclick="addToCart('${p.name}',${p.price})">
-            Add to Cart
-          </button>
-        </div>
-      </div>
-    `;
-
-    container.appendChild(div);
-  });
+<button class="purchase-btn" onclick="addToCart('${p.name}',${p.price})">
+Add to Cart
+</button>
+</div>
+</div>`;
+});
 }
 
-// ----------------------------
 // CART
-// ----------------------------
 function addToCart(name,price){
-  let cart=JSON.parse(localStorage.getItem("cart"))||[];
-  cart.push({item:name,price:Number(price)});
-  localStorage.setItem("cart",JSON.stringify(cart));
-  updateCart();
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+cart.push({item:name,price:Number(price)});
+localStorage.setItem("cart",JSON.stringify(cart));
+updateCart();
 }
 
 function updateCart(){
-  let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+document.getElementById("cartCount").textContent=cart.length;
 
-  document.getElementById("cartCount").textContent=cart.length;
+let total=0;
+const container=document.getElementById("sideCartItems");
+container.innerHTML="";
 
-  const container=document.getElementById("sideCartItems");
-  container.innerHTML="";
+cart.forEach((item,i)=>{
+total+=item.price;
 
-  let total=0;
+container.innerHTML+=`
+<div style="display:flex;justify-content:space-between;">
+${item.item} - GHC ${item.price}
+<button onclick="removeItem(${i})">X</button>
+</div>`;
+});
 
-  cart.forEach((item,i)=>{
-    total+=item.price;
-
-    container.innerHTML+=`
-      <div style="display:flex;justify-content:space-between;">
-        ${item.item} - GHC ${item.price}
-        <button onclick="removeItem(${i})">X</button>
-      </div>
-    `;
-  });
-
-  document.getElementById("sideCartTotal").textContent=total;
+document.getElementById("sideCartTotal").textContent=total;
 }
 
 function removeItem(i){
-  let cart=JSON.parse(localStorage.getItem("cart"));
-  cart.splice(i,1);
-  localStorage.setItem("cart",JSON.stringify(cart));
-  updateCart();
+let cart=JSON.parse(localStorage.getItem("cart"));
+cart.splice(i,1);
+localStorage.setItem("cart",JSON.stringify(cart));
+updateCart();
 }
 
-// ----------------------------
 // PAYSTACK
-// ----------------------------
 function payNow(){
+let email=document.getElementById("customerEmail").value;
+let phone=document.getElementById("customerPhone").value;
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
-  let email=document.getElementById("customerEmail").value;
-  let phone=document.getElementById("customerPhone").value;
-  let cart=JSON.parse(localStorage.getItem("cart"))||[];
-
-  if(!email || !phone){
-    alert("Enter email and phone");
-    return;
-  }
-
-  let total=0;
-  cart.forEach(i=> total+=i.price);
-
-  let handler=PaystackPop.setup({
-    key:"pk_live_76e7df83f71c725b7e10d514b3c935324a97761e",
-    email:email,
-    amount:total*100,
-    currency:"GHS",
-
-    callback:function(res){
-
-      localStorage.setItem("receipt",JSON.stringify({
-        email,phone,cart,total,ref:res.reference
-      }));
-
-      localStorage.removeItem("cart");
-
-      window.location.href="receipt.html";
-    }
-  });
-
-  handler.openIframe();
+if(!email || !phone){
+alert("Enter email and phone");
+return;
 }
 
-// ----------------------------
+let total=0;
+cart.forEach(i=> total+=i.price);
+
+PaystackPop.setup({
+key:"pk_live_76e7df83f71c725b7e10d514b3c935324a97761e",
+email:email,
+amount:total*100,
+currency:"GHS",
+
+callback:function(res){
+localStorage.setItem("receipt",JSON.stringify({email,phone,cart,total,ref:res.reference}));
+localStorage.removeItem("cart");
+window.location.href="receipt.html";
+}
+
+}).openIframe();
+}
+
 // INIT
-// ----------------------------
 document.addEventListener("DOMContentLoaded",()=>{
+renderProducts();
+updateCart();
 
-  renderProducts();
-  updateCart();
+cartIcon.onclick=()=>{sideCart.style.display="block";sideCart.style.right="0";}
+closeSideCart.onclick=()=>{sideCart.style.right="-100%";}
 
-  const cartIcon=document.getElementById("cartIcon");
-  const sideCart=document.getElementById("sideCart");
-
-  cartIcon.onclick=()=>{
-    sideCart.style.display="block";
-    sideCart.style.right="0";
-  };
-
-  document.getElementById("closeSideCart").onclick=()=>{
-    sideCart.style.right="-100%";
-  };
-
-  document.querySelectorAll("nav a").forEach(link=>{
-    link.onclick=(e)=>{
-      e.preventDefault();
-      renderProducts(link.dataset.category);
-    };
-  });
-
+document.querySelectorAll("nav a").forEach(link=>{
+link.onclick=(e)=>{e.preventDefault();renderProducts(link.dataset.category);}
 });
-document.getElementById("closeSideCart").onclick=()=>{
-document.getElementById("sideCart").style.right="-100%";
-};
 });
