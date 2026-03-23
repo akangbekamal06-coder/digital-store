@@ -1,3 +1,6 @@
+// ----------------------------
+// PRODUCTS
+// ----------------------------
 const products = [
 
 {name:"EXPRESS VPN 1 MONTH", price:45, image:"images/express-vpn.jpg", category:"VPN"},
@@ -49,108 +52,158 @@ const products = [
 
 ];
 
-// RENDER
+// ----------------------------
+// RENDER PRODUCTS
+// ----------------------------
 function renderProducts(category="all"){
-const container=document.querySelector(".products-list");
-container.innerHTML="";
+const container = document.querySelector(".products-list");
+container.innerHTML = "";
 
-let filtered = category==="all" ? products : products.filter(p=>p.category===category);
+let filtered = category === "all" ? products : products.filter(p => p.category === category);
 
 filtered.forEach(p=>{
-container.innerHTML+=`
+container.innerHTML += `
 <div class="product-card">
-<div class="product-info">
-<img src="${p.image}">
-<div class="product-details">
-<span>${p.name}</span>
-</div>
-</div>
+  <div class="product-info">
+    <img src="${p.image}">
+    <div class="product-details">
+      <span>${p.name}</span>
+    </div>
+  </div>
 
-<div class="product-price-stock">
-<span class="price">${p.price}GHC</span>
+  <div class="product-price-stock">
+    <span class="price">${p.price}GHC</span>
 
-<button class="purchase-btn" onclick="addToCart('${p.name}',${p.price})">
-Add to Cart
-</button>
-</div>
+    <button class="purchase-btn" onclick="addToCart('${p.name}',${p.price})">
+      Add to Cart
+    </button>
+  </div>
 </div>`;
 });
 }
 
+// ----------------------------
 // CART
+// ----------------------------
 function addToCart(name,price){
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
-cart.push({item:name,price:Number(price)});
-localStorage.setItem("cart",JSON.stringify(cart));
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+cart.push({item:name, price:Number(price)});
+localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
+alert(name + " added to cart");
 }
 
 function updateCart(){
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
-document.getElementById("cartCount").textContent=cart.length;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-let total=0;
-const container=document.getElementById("sideCartItems");
-container.innerHTML="";
+document.getElementById("cartCount").textContent = cart.length;
+
+let total = 0;
+const container = document.getElementById("sideCartItems");
+container.innerHTML = "";
+
+if(cart.length === 0){
+container.innerHTML = "<p>Your cart is empty</p>";
+}
 
 cart.forEach((item,i)=>{
-total+=item.price;
+total += item.price;
 
-container.innerHTML+=`
-<div style="display:flex;justify-content:space-between;">
-${item.item} - GHC ${item.price}
+container.innerHTML += `
+<div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+<span>${item.item} - GHC ${item.price}</span>
 <button onclick="removeItem(${i})">X</button>
 </div>`;
 });
 
-document.getElementById("sideCartTotal").textContent=total;
+document.getElementById("sideCartTotal").textContent = total;
 }
 
 function removeItem(i){
-let cart=JSON.parse(localStorage.getItem("cart"));
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 cart.splice(i,1);
-localStorage.setItem("cart",JSON.stringify(cart));
+localStorage.setItem("cart", JSON.stringify(cart));
 updateCart();
 }
 
+// ----------------------------
 // PAYSTACK
-function payNow(){
-let email=document.getElementById("customerEmail").value;
-let phone=document.getElementById("customerPhone").value;
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
+// ----------------------------
+function payWithPaystack(){
+
+let email = document.getElementById("customerEmail").value;
+let phone = document.getElementById("customerPhone").value;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 if(!email || !phone){
 alert("Enter email and phone");
 return;
 }
 
-let total=0;
-cart.forEach(i=> total+=i.price);
+if(cart.length === 0){
+alert("Cart is empty");
+return;
+}
 
-PaystackPop.setup({
-key:"pk_live_76e7df83f71c725b7e10d514b3c935324a97761e",
-email:email,
-amount:total*100,
-currency:"GHS",
+let total = 0;
+cart.forEach(i => total += i.price);
 
-callback:function(res){
-localStorage.setItem("receipt",JSON.stringify({email,phone,cart,total,ref:res.reference}));
+let handler = PaystackPop.setup({
+key: "pk_live_76e7df83f71c725b7e10d514b3c935324a97761e",
+email: email,
+amount: total * 100,
+currency: "GHS",
+
+callback: function(res){
+localStorage.setItem("receipt", JSON.stringify({
+email,
+phone,
+cart,
+total,
+ref: res.reference
+}));
+
 localStorage.removeItem("cart");
-window.location.href="receipt.html";
+
+window.location.href = "receipt.html";
+},
+
+onClose: function(){
+alert("Payment cancelled");
+}
+});
+
+handler.openIframe();
 }
 
-}).openIframe();
-}
-
+// ----------------------------
 // INIT
+// ----------------------------
 document.addEventListener("DOMContentLoaded",()=>{
+
 renderProducts();
 updateCart();
 
-cartIcon.onclick=()=>{sideCart.style.display="block";sideCart.style.right="0";}
-closeSideCart.onclick=()=>{sideCart.style.right="-100%";}
+// OPEN CART
+const sideCart = document.getElementById("sideCart");
+const cartIcon = document.getElementById("cartIcon");
+const closeBtn = document.getElementById("closeSideCart");
 
+cartIcon.onclick = ()=>{
+sideCart.style.display = "block";
+sideCart.style.right = "0";
+};
+
+closeBtn.onclick = ()=>{
+sideCart.style.right = "-100%";
+};
+
+// CATEGORY FILTER
 document.querySelectorAll("nav a").forEach(link=>{
-link.onclick=(e)=>{e.preventDefault();renderProducts(link.dataset.category);}
+link.onclick = (e)=>{
+e.preventDefault();
+renderProducts(link.dataset.category);
+};
 });
+
 });
