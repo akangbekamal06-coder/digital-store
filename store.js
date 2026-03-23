@@ -20,14 +20,6 @@ function getOrderID() {
 return localStorage.getItem('orderID') || storeOrderID();
 }
 
-function getWhatsAppLink(whatsappNumber, productName) {
-const orderID = getOrderID();
-const encodedMessage = encodeURIComponent(
-`Hello, I have paid for ${productName} with Order ID ${orderID}`
-);
-return `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-}
-
 // ----------------------------
 // PRODUCTS (PRICES FIXED)
 // ----------------------------
@@ -85,6 +77,10 @@ const products = [
 // ----------------------------
 function renderProducts(category="all"){
 const container=document.querySelector(".products-list");
+
+// 🔥 prevent crash
+if(!container) return;
+
 container.innerHTML="";
 let filtered=products;
 
@@ -133,14 +129,19 @@ alert(`${name} added to cart!`);
 
 function updateSideCart(){
 const cart=JSON.parse(localStorage.getItem('cart'))||[];
-document.getElementById('cartCount').textContent=cart.length;
+
+const count=document.getElementById('cartCount');
+if(count) count.textContent=cart.length;
 
 const container=document.getElementById('sideCartItems');
+if(!container) return;
+
 container.innerHTML="";
 let total=0;
 
 cart.forEach((item,index)=>{
 const div=document.createElement('div');
+
 div.style.display='flex';
 div.style.justifyContent='space-between';
 
@@ -153,7 +154,8 @@ container.appendChild(div);
 total += Number(item.price);
 });
 
-document.getElementById('sideCartTotal').textContent=total;
+const totalEl=document.getElementById('sideCartTotal');
+if(totalEl) totalEl.textContent=total;
 }
 
 function removeFromCart(index){
@@ -174,14 +176,11 @@ storeOrderID();
 window.location.href='checkout.html';
 }
 
-function goToCheckout(){
-window.location.href='checkout.html';
-}
-
 // ----------------------------
 // INIT
 // ----------------------------
 document.addEventListener("DOMContentLoaded",()=>{
+
 renderProducts("all");
 updateSideCart();
 
@@ -196,14 +195,14 @@ const sideCart=document.getElementById('sideCart');
 const cartIcon=document.getElementById('cartIcon');
 const closeBtn=document.getElementById('closeSideCart');
 
-if(cartIcon){
+if(cartIcon && sideCart){
 cartIcon.onclick=()=>{
 sideCart.style.right='0';
 updateSideCart();
 };
 }
 
-if(closeBtn){
+if(closeBtn && sideCart){
 closeBtn.onclick=()=>{
 sideCart.style.right='-100%';
 };
