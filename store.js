@@ -1,27 +1,5 @@
 // ----------------------------
-// ORDER ID FUNCTIONS
-// ----------------------------
-function generateOrderID() {
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-let id = '';
-for (let i = 0; i < 8; i++) {
-id += chars.charAt(Math.floor(Math.random() * chars.length));
-}
-return id;
-}
-
-function storeOrderID() {
-const orderID = generateOrderID();
-localStorage.setItem('orderID', orderID);
-return orderID;
-}
-
-function getOrderID() {
-return localStorage.getItem('orderID') || storeOrderID();
-}
-
-// ----------------------------
-// PRODUCTS (PRICES FIXED)
+// PRODUCTS (ALL YOUR PRODUCTS)
 // ----------------------------
 const products = [
 {name:"EXPRESS VPN 1 MONTH", price:45, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
@@ -77,16 +55,11 @@ const products = [
 // ----------------------------
 function renderProducts(category="all"){
 const container=document.querySelector(".products-list");
-
-// 🔥 prevent crash
 if(!container) return;
 
 container.innerHTML="";
-let filtered=products;
 
-if(category!=="all"){
-filtered=products.filter(p=>p.category===category);
-}
+let filtered = category==="all" ? products : products.filter(p=>p.category===category);
 
 filtered.forEach(p=>{
 const div=document.createElement("div");
@@ -97,7 +70,6 @@ div.innerHTML=`
   <img src="${p.image}" alt="${p.name}">
   <div class="product-details">
     <span>${p.name}</span>
-    <a href="#">View details</a>
   </div>
 </div>
 
@@ -106,8 +78,8 @@ div.innerHTML=`
   <span class="stock">${p.stock} pcs</span>
 
   <div style="display:flex;gap:10px;">
-    <button class="purchase-btn" onclick="buyNow('${p.name}',${p.price})">Buy Now</button>
-    <button class="purchase-btn add-cart-btn" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+    <button onclick="buyNow('${p.name}',${p.price})">Buy Now</button>
+    <button onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
   </div>
 </div>
 `;
@@ -124,38 +96,30 @@ let cart=JSON.parse(localStorage.getItem('cart'))||[];
 cart.push({item:name,price:Number(price)});
 localStorage.setItem('cart',JSON.stringify(cart));
 updateSideCart();
-alert(`${name} added to cart!`);
+alert(name+" added to cart!");
 }
 
 function updateSideCart(){
 const cart=JSON.parse(localStorage.getItem('cart'))||[];
 
-const count=document.getElementById('cartCount');
-if(count) count.textContent=cart.length;
+document.getElementById('cartCount').textContent=cart.length;
 
 const container=document.getElementById('sideCartItems');
-if(!container) return;
-
 container.innerHTML="";
+
 let total=0;
 
 cart.forEach((item,index)=>{
-const div=document.createElement('div');
-
-div.style.display='flex';
-div.style.justifyContent='space-between';
-
-div.innerHTML=`
+container.innerHTML+=`
+<div style="display:flex;justify-content:space-between;">
 <span>${item.item} - GHC ${item.price}</span>
 <button onclick="removeFromCart(${index})">Remove</button>
+</div>
 `;
-
-container.appendChild(div);
-total += Number(item.price);
+total+=item.price;
 });
 
-const totalEl=document.getElementById('sideCartTotal');
-if(totalEl) totalEl.textContent=total;
+document.getElementById('sideCartTotal').textContent=total;
 }
 
 function removeFromCart(index){
@@ -166,14 +130,64 @@ updateSideCart();
 }
 
 // ----------------------------
+// PAYSTACK
+// ----------------------------
+function payWithPaystack(){
+let cart=JSON.parse(localStorage.getItem('cart'))||[];
+
+if(cart.length===0){
+alert("Cart is empty");
+return;
+}
+
+let email=document.getElementById("customerEmail").value;
+let phone=document.getElementById("customerPhone").value;
+
+if(!email || !phone){
+alert("Enter email and phone");
+return;
+}
+
+let total=0;
+cart.forEach(i=> total+=i.price);
+
+let handler = PaystackPop.setup({
+key: 'pk_live_76e7df83f71c725b7e10d514b3c935324a97761e',
+email: email,
+amount: total * 100,
+currency: "GHS",
+
+metadata:{
+custom_fields:[
+{
+display_name:"Phone",
+variable_name:"phone",
+value:phone
+}
+]
+},
+
+callback: function(){
+alert("Payment successful!");
+localStorage.removeItem('cart');
+updateSideCart();
+},
+
+onClose: function(){
+alert("Payment cancelled");
+}
+});
+
+handler.openIframe();
+}
+
+// ----------------------------
 // BUY NOW
 // ----------------------------
 function buyNow(name,price){
-const cart=[{item:name,price:Number(price)}];
-localStorage.setItem('cart',JSON.stringify(cart));
+localStorage.setItem('cart', JSON.stringify([{item:name,price:Number(price)}]));
 updateSideCart();
-storeOrderID();
-window.location.href='checkout.html';
+payWithPaystack();
 }
 
 // ----------------------------
@@ -192,20 +206,14 @@ renderProducts(link.getAttribute('data-category'));
 });
 
 const sideCart=document.getElementById('sideCart');
-const cartIcon=document.getElementById('cartIcon');
-const closeBtn=document.getElementById('closeSideCart');
 
-if(cartIcon && sideCart){
-cartIcon.onclick=()=>{
+document.getElementById('cartIcon').onclick=()=>{
 sideCart.style.right='0';
 updateSideCart();
 };
-}
 
-if(closeBtn && sideCart){
-closeBtn.onclick=()=>{
+document.getElementById('closeSideCart').onclick=()=>{
 sideCart.style.right='-100%';
 };
-}
 
 });
