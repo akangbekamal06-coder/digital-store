@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+:<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -17,12 +17,12 @@
     <a href="#" data-category="Data">Data</a>
     <a href="#" data-category="Accounts">Accounts</a>
     <a href="#" data-category="Messaging">Messaging</a>
-    <a href="#" data-category="Proxies">Proxies</a> <!-- ✅ added -->
+    <a href="#" data-category="Proxies">Proxies</a>
   </nav>
 
   <!-- Cart Icon -->
-  <div class="cart-wrapper">
-    <img src="https://img.icons8.com/ios-filled/50/ff4b4b/shopping-cart.png" alt="Cart" id="cartIcon">
+  <div class="cart-wrapper" id="cartIcon">
+    <img src="https://img.icons8.com/ios-filled/50/ff4b4b/shopping-cart.png" alt="Cart">
     <span id="cartCount">0</span>
   </div>
 </header>
@@ -40,13 +40,27 @@
     Total: GHC <span id="sideCartTotal">0</span>
   </div>
 
-  <!-- ✅ NEW: CUSTOMER INPUT -->
-  <input type="email" id="customerEmail" placeholder="Enter your email" style="width:100%;padding:8px;margin-top:10px;">
-  
-  <input type="tel" id="customerPhone" placeholder="Enter phone number" style="width:100%;padding:8px;margin-top:5px;">
+  <!-- CUSTOMER DETAILS -->
+  <input 
+    type="email" 
+    id="customerEmail" 
+    placeholder="Enter your email"
+    required
+    style="width:100%;padding:10px;margin-top:10px;border-radius:6px;border:1px solid #ccc;"
+  >
 
-  <!-- ✅ UPDATED BUTTON -->
-  <button onclick="payWithPaystack()" style="margin-top:10px;">Pay Now</button>
+  <input 
+    type="tel" 
+    id="customerPhone" 
+    placeholder="Enter phone number"
+    required
+    style="width:100%;padding:10px;margin-top:8px;border-radius:6px;border:1px solid #ccc;"
+  >
+
+  <!-- PAY BUTTON -->
+  <button onclick="payWithPaystack()" style="margin-top:12px;width:100%;">
+    Pay Now
+  </button>
 </div>
 
 <!-- HERO -->
@@ -85,14 +99,14 @@ digitalhubghsupport@gmail.com
 <img src="https://img.icons8.com/ios-filled/50/ffffff/topic.png" alt="Support">
 </a>
 
-<!-- ✅ PAYSTACK SCRIPT (VERY IMPORTANT) -->
+<!-- ✅ PAYSTACK SCRIPT (MUST BE BEFORE store.js) -->
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
-<!-- YOUR JS -->
+<!-- YOUR STORE JS -->
 <script src="store.js"></script>
 
-<!-- TAWK.TO LIVE CHAT -->
-<script type="text/javascript">
+<!-- TAWK CHAT -->
+<script>
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
