@@ -29,26 +29,32 @@ return `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 }
 
 // ----------------------------
-// ALL PRODUCTS (FULL LIST)
+// PRODUCTS (PRICES FIXED)
 // ----------------------------
 const products = [
-{name:"EXPRESS VPN 1 MONTH", price:35, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
+{name:"EXPRESS VPN 1 MONTH", price:45, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
 {name:"EXPRESS VPN 3 MONTHS", price:50, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
-{name:"EXPRESS VPN 1 YEAR", price:70, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
+{name:"EXPRESS VPN 1 YEAR", price:90, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
+
 {name:"PIA VPN 1 MONTH", price:45, stock:10, image:"images/pia-vpn.png", category:"VPN"},
 {name:"PIA VPN 3 MONTHS", price:65, stock:10, image:"images/pia-vpn.png", category:"VPN"},
-{name:"PIA VPN 1 YEAR", price:100, stock:10, image:"images/pia-vpn.png", category:"VPN"},
-{name:"HMA PRO VPN 1 MONTH", price:35, stock:10, image:"images/hma-vpn.jpg", category:"VPN"},
-{name:"HMA PRO VPN 1 YEAR", price:60, stock:10, image:"images/hma-vpn.jpg", category:"VPN"},
+{name:"PIA VPN 1 YEAR", price:90, stock:10, image:"images/pia-vpn.png", category:"VPN"},
+
+{name:"HMA PRO VPN 1 MONTH", price:45, stock:10, image:"images/hma-vpn.jpg", category:"VPN"},
+{name:"HMA PRO VPN 1 YEAR", price:90, stock:10, image:"images/hma-vpn.jpg", category:"VPN"},
+
 {name:"IPVANISH VPN 6 MONTHS", price:55, stock:10, image:"images/ipvanish-vpn.jpg", category:"VPN"},
-{name:"IPVANISH VPN 1 YEAR", price:85, stock:10, image:"images/ipvanish-vpn.jpg", category:"VPN"},
-{name:"NORD VPN 1 MONTH", price:35, stock:10, image:"images/nord-vpn.png", category:"VPN"},
-{name:"NORD VPN 1 YEAR", price:70, stock:10, image:"images/nord-vpn.png", category:"VPN"},
+{name:"IPVANISH VPN 1 YEAR", price:90, stock:10, image:"images/ipvanish-vpn.jpg", category:"VPN"},
+
+{name:"NORD VPN 1 MONTH", price:45, stock:10, image:"images/nord-vpn.png", category:"VPN"},
+{name:"NORD VPN 1 YEAR", price:90, stock:10, image:"images/nord-vpn.png", category:"VPN"},
 {name:"NORD VPN 2 YEARS", price:120, stock:10, image:"images/nord-vpn.png", category:"VPN"},
-{name:"CYBER GHOST VPN 1 MONTH", price:35, stock:10, image:"images/cyberghost-vpn.jpg", category:"VPN"},
+
+{name:"CYBER GHOST VPN 1 MONTH", price:45, stock:10, image:"images/cyberghost-vpn.jpg", category:"VPN"},
 {name:"CYBER GHOST VPN 6 MONTHS", price:50, stock:10, image:"images/cyberghost-vpn.jpg", category:"VPN"},
 {name:"CYBER GHOST VPN 2 YEARS", price:90, stock:10, image:"images/cyberghost-vpn.jpg", category:"VPN"},
-{name:"SURFSHARK VPN 1 MONTH", price:30, stock:10, image:"images/surfshark-vpn.jpg", category:"VPN"},
+
+{name:"SURFSHARK VPN 1 MONTH", price:45, stock:10, image:"images/surfshark-vpn.jpg", category:"VPN"},
 
 {name:"GMAIL PHONE VERIFIED ACCOUNT", price:25, stock:10, image:"images/gmail.jpg", category:"Accounts"},
 {name:"GOOGLE VOICE ACCOUNT", price:40, stock:10, image:"images/google-voice.png", category:"Accounts"},
@@ -91,26 +97,21 @@ const div=document.createElement("div");
 div.className="product-card";
 
 div.innerHTML=`
-<div class="product-info">
-  <img src="${p.image}" alt="${p.name}">
-  <div class="product-details">
-    <span>${p.name}</span>
-    <a href="#">View details</a>
-  </div>
-</div>
 
-<div class="product-price-stock">
-  <span class="price">${p.price}GHC</span>
-  <span class="stock">${p.stock} pcs</span>
-
-  <div style="display:flex;gap:10px;">
-    <button class="purchase-btn" onclick="buyNow('${p.name}',${p.price})">Buy Now</button>
-    <button class="purchase-btn add-cart-btn" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
-  </div>
-</div>
-`;
-
-container.appendChild(div);
+<div class="product-info">  
+  <img src="${p.image}" alt="${p.name}">  
+  <div class="product-details">  
+    <span>${p.name}</span>  
+    <a href="#">View details</a>  
+  </div>  
+</div>  <div class="product-price-stock">  
+  <span class="price">${p.price}GHC</span>  
+  <span class="stock">${p.stock} pcs</span>    <div style="display:flex;gap:10px;">  
+    <button class="purchase-btn" onclick="buyNow('${p.name}',${p.price})">Buy Now</button>  
+    <button class="purchase-btn add-cart-btn" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>  
+  </div>  
+</div>  
+`;  container.appendChild(div);
 });
 }
 
@@ -126,7 +127,7 @@ localStorage.setItem('cart',JSON.stringify(cart));
 
 updateSideCart();
 
-alert(`${name} added to cart!`);
+alert(${name} added to cart!);
 }
 
 function updateSideCart(){
@@ -145,10 +146,7 @@ const div=document.createElement('div');
 div.style.display='flex';
 div.style.justifyContent='space-between';
 
-div.innerHTML=`
-<span>${item.item} - GHC ${item.price}</span>
-<button onclick="removeFromCart(${index})">Remove</button>
-`;
+div.innerHTML=  <span>${item.item} - GHC ${item.price}</span>   <button onclick="removeFromCart(${index})">Remove</button>  ;
 
 container.appendChild(div);
 
