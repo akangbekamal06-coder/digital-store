@@ -2,127 +2,88 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cart - Digital Hub Store</title>
-<link rel="stylesheet" href="style.css">
+<title>Your Cart</title>
 <style>
-/* CART PAGE STYLES */
-.cart-container {
-  max-width: 900px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+body {
+    font-family: Arial;
+    background: #f5f5f5;
+    padding: 20px;
 }
-.cart-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #ff4b4b;
+h2 {
+    text-align: center;
 }
 .cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #eee;
-  padding: 10px 0;
+    background: white;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
 }
-.cart-item span {
-  font-size: 16px;
+button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
 }
-.remove-btn {
-  background: #ff4b4b;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.remove-btn:hover {
-  background: #e03e3e;
-}
-#cartTotal {
-  font-weight: bold;
-  margin-top: 15px;
-  text-align: right;
-  font-size: 18px;
-}
-.checkout-btn {
-  margin-top: 20px;
-  width: 100%;
-  padding: 12px;
-  background: #ff4b4b;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.checkout-btn:hover {
-  background: #e03e3e;
+.checkout {
+    background: green;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
 }
 </style>
 </head>
+
 <body>
 
-<div class="cart-container">
-  <h2>Shopping Cart - Digital Hub Store</h2>
+<h2>🛒 Your Cart</h2>
 
-  <div id="cartItems"></div>
-  <div id="cartTotal">Total: GHC 0</div>
+<div id="cartItems"></div>
 
-  <button class="checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
-</div>
+<button class="checkout" onclick="checkout()">Checkout via WhatsApp</button>
 
 <script>
-// LOAD CART ITEMS
-function loadCart() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const container = document.getElementById('cartItems');
-  container.innerHTML = "";
-  let total = 0;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  cart.forEach((item, index) => {
-    const div = document.createElement('div');
-    div.className = 'cart-item';
+function displayCart() {
+    let container = document.getElementById("cartItems");
+    container.innerHTML = "";
 
-    const itemText = document.createElement('span');
-    itemText.textContent = `${item.item} - GHC ${item.price}`;
+    if (cart.length === 0) {
+        container.innerHTML = "<p>Your cart is empty</p>";
+        return;
+    }
 
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = 'Remove';
-    removeBtn.className = 'remove-btn';
-    removeBtn.addEventListener('click', () => {
-      removeFromCart(index);
-      loadCart();
+    cart.forEach((item, index) => {
+        container.innerHTML += `
+        <div class="cart-item">
+            <h3>${item.name}</h3>
+            <p>Price: ${item.price}</p>
+            <button onclick="removeItem(${index})">Remove</button>
+        </div>`;
+    });
+}
+
+function removeItem(index) {
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
+
+function checkout() {
+    let message = "Hello, I want to order:\n";
+
+    cart.forEach(item => {
+        message += `${item.name} - ${item.price}\n`;
     });
 
-    div.appendChild(itemText);
-    div.appendChild(removeBtn);
-    container.appendChild(div);
+    let phone = "233509329683";
+    let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
 
-    total += item.price;
-  });
-
-  document.getElementById('cartTotal').textContent = `Total: GHC ${total}`;
+    window.open(url, "_blank");
 }
 
-// REMOVE ITEM FROM CART
-function removeFromCart(index) {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.splice(index, 1);
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// GO TO CHECKOUT
-function goToCheckout() {
-  window.location.href = 'checkout.html';
-}
-
-// INITIALIZE
-document.addEventListener("DOMContentLoaded", loadCart);
+displayCart();
 </script>
 
 </body>
