@@ -52,158 +52,129 @@ const products = [
 
 ];
 
-// ----------------------------
-// RENDER PRODUCTS
-// ----------------------------
+// ------------------ RENDER ------------------
 function renderProducts(category="all"){
-const container = document.querySelector(".products-list");
-container.innerHTML = "";
+const container=document.querySelector(".products-list");
+container.innerHTML="";
 
-let filtered = category === "all" ? products : products.filter(p => p.category === category);
+let filtered = category==="all" ? products : products.filter(p=>p.category===category);
 
 filtered.forEach(p=>{
-container.innerHTML += `
+container.innerHTML+=`
 <div class="product-card">
-  <div class="product-info">
-    <img src="${p.image}">
-    <div class="product-details">
-      <span>${p.name}</span>
-    </div>
-  </div>
+<div class="product-info">
+<img src="${p.image}">
+<div class="product-details">
+<span>${p.name}</span>
+</div>
+</div>
 
-  <div class="product-price-stock">
-    <span class="price">${p.price}GHC</span>
+<div class="product-price-stock">
+<span class="price">GHC ${p.price}</span>
 
-    <button class="purchase-btn" onclick="addToCart('${p.name}',${p.price})">
-      Add to Cart
-    </button>
-  </div>
+<div class="btns">
+<button class="add-cart-btn" onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+<button class="purchase-btn" onclick="buyNow('${p.name}',${p.price})">Buy Now</button>
+</div>
+</div>
 </div>`;
 });
 }
 
-// ----------------------------
-// CART
-// ----------------------------
+// ------------------ CART ------------------
 function addToCart(name,price){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-cart.push({item:name, price:Number(price)});
-localStorage.setItem("cart", JSON.stringify(cart));
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+cart.push({item:name,price:Number(price)});
+localStorage.setItem("cart",JSON.stringify(cart));
 updateCart();
-alert(name + " added to cart");
+}
+
+function buyNow(name,price){
+localStorage.setItem("cart",JSON.stringify([{item:name,price:Number(price)}]));
+updateCart();
+openCart();
 }
 
 function updateCart(){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+document.getElementById("cartCount").textContent=cart.length;
 
-document.getElementById("cartCount").textContent = cart.length;
-
-let total = 0;
-const container = document.getElementById("sideCartItems");
-container.innerHTML = "";
-
-if(cart.length === 0){
-container.innerHTML = "<p>Your cart is empty</p>";
-}
+let total=0;
+const container=document.getElementById("sideCartItems");
+container.innerHTML="";
 
 cart.forEach((item,i)=>{
-total += item.price;
+total+=item.price;
 
-container.innerHTML += `
-<div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-<span>${item.item} - GHC ${item.price}</span>
-<button onclick="removeItem(${i})">X</button>
+container.innerHTML+=`
+<div class="cart-item">
+<span>${item.item}</span>
+<span>GHC ${item.price}</span>
+<button onclick="removeItem(${i})">×</button>
 </div>`;
 });
 
-document.getElementById("sideCartTotal").textContent = total;
+document.getElementById("sideCartTotal").textContent=total;
 }
 
 function removeItem(i){
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart=JSON.parse(localStorage.getItem("cart"));
 cart.splice(i,1);
-localStorage.setItem("cart", JSON.stringify(cart));
+localStorage.setItem("cart",JSON.stringify(cart));
 updateCart();
 }
 
-// ----------------------------
-// PAYSTACK
-// ----------------------------
+// ------------------ PAYSTACK ------------------
 function payWithPaystack(){
-
-let email = document.getElementById("customerEmail").value;
-let phone = document.getElementById("customerPhone").value;
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let email=document.getElementById("customerEmail").value;
+let phone=document.getElementById("customerPhone").value;
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
 if(!email || !phone){
 alert("Enter email and phone");
 return;
 }
 
-if(cart.length === 0){
-alert("Cart is empty");
-return;
-}
+let total=0;
+cart.forEach(i=> total+=i.price);
 
-let total = 0;
-cart.forEach(i => total += i.price);
+PaystackPop.setup({
+key:"pk_live_76e7df83f71c725b7e10d514b3c935324a97761e",
+email:email,
+amount:total*100,
+currency:"GHS",
 
-let handler = PaystackPop.setup({
-key: "pk_live_76e7df83f71c725b7e10d514b3c935324a97761e",
-email: email,
-amount: total * 100,
-currency: "GHS",
-
-callback: function(res){
-localStorage.setItem("receipt", JSON.stringify({
-email,
-phone,
-cart,
-total,
-ref: res.reference
-}));
-
+callback:function(res){
+localStorage.setItem("receipt",JSON.stringify({email,phone,cart,total,ref:res.reference}));
 localStorage.removeItem("cart");
-
-window.location.href = "receipt.html";
-},
-
-onClose: function(){
-alert("Payment cancelled");
-}
-});
-
-handler.openIframe();
+window.location.href="receipt.html";
 }
 
-// ----------------------------
-// INIT
-// ----------------------------
+}).openIframe();
+}
+
+// ------------------ UI CONTROL ------------------
+function openCart(){
+sideCart.style.display="block";
+sideCart.style.right="0";
+}
+
+function closeCart(){
+sideCart.style.right="-100%";
+}
+
+// ------------------ INIT ------------------
 document.addEventListener("DOMContentLoaded",()=>{
-
 renderProducts();
 updateCart();
 
-// OPEN CART
-const sideCart = document.getElementById("sideCart");
-const cartIcon = document.getElementById("cartIcon");
-const closeBtn = document.getElementById("closeSideCart");
+cartIcon.onclick=openCart;
+closeSideCart.onclick=closeCart;
 
-cartIcon.onclick = ()=>{
-sideCart.style.display = "block";
-sideCart.style.right = "0";
-};
-
-closeBtn.onclick = ()=>{
-sideCart.style.right = "-100%";
-};
-
-// CATEGORY FILTER
 document.querySelectorAll("nav a").forEach(link=>{
-link.onclick = (e)=>{
+link.onclick=(e)=>{
 e.preventDefault();
 renderProducts(link.dataset.category);
 };
 });
-
 });
