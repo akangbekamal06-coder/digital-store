@@ -1,5 +1,5 @@
 // ----------------------------
-// PRODUCTS (ALL YOUR PRODUCTS)
+// PRODUCTS
 // ----------------------------
 const products = [
 {name:"EXPRESS VPN 1 MONTH", price:45, stock:10, image:"images/express-vpn.jpg", category:"VPN"},
@@ -51,40 +51,25 @@ const products = [
 ];
 
 // ----------------------------
-// RENDER PRODUCTS
+// RENDER
 // ----------------------------
 function renderProducts(category="all"){
 const container=document.querySelector(".products-list");
-if(!container) return;
-
 container.innerHTML="";
 
 let filtered = category==="all" ? products : products.filter(p=>p.category===category);
 
 filtered.forEach(p=>{
-const div=document.createElement("div");
-div.className="product-card";
+container.innerHTML+=`
+<div class="product-card">
+<img src="${p.image}" style="width:80px">
+<h4>${p.name}</h4>
+<p>${p.price} GHC</p>
 
-div.innerHTML=`
-<div class="product-info">
-  <img src="${p.image}" alt="${p.name}">
-  <div class="product-details">
-    <span>${p.name}</span>
-  </div>
-</div>
-
-<div class="product-price-stock">
-  <span class="price">${p.price}GHC</span>
-  <span class="stock">${p.stock} pcs</span>
-
-  <div style="display:flex;gap:10px;">
-    <button onclick="buyNow('${p.name}',${p.price})">Buy Now</button>
-    <button onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
-  </div>
+<button onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+<button onclick="buyNow('${p.name}',${p.price})">Buy Now</button>
 </div>
 `;
-
-container.appendChild(div);
 });
 }
 
@@ -95,16 +80,15 @@ function addToCart(name,price){
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
 cart.push({item:name,price:Number(price)});
 localStorage.setItem('cart',JSON.stringify(cart));
-updateSideCart();
-alert(name+" added to cart!");
+updateCart();
+alert("Added to cart");
 }
 
-function updateSideCart(){
-const cart=JSON.parse(localStorage.getItem('cart'))||[];
+function updateCart(){
+let cart=JSON.parse(localStorage.getItem('cart'))||[];
+document.getElementById("cartCount").textContent=cart.length;
 
-document.getElementById('cartCount').textContent=cart.length;
-
-const container=document.getElementById('sideCartItems');
+let container=document.getElementById("sideCartItems");
 container.innerHTML="";
 
 let total=0;
@@ -112,21 +96,21 @@ let total=0;
 cart.forEach((item,index)=>{
 container.innerHTML+=`
 <div style="display:flex;justify-content:space-between;">
-<span>${item.item} - GHC ${item.price}</span>
-<button onclick="removeFromCart(${index})">Remove</button>
+${item.item} - GHC ${item.price}
+<button onclick="removeItem(${index})">X</button>
 </div>
 `;
 total+=item.price;
 });
 
-document.getElementById('sideCartTotal').textContent=total;
+document.getElementById("sideCartTotal").textContent=total;
 }
 
-function removeFromCart(index){
+function removeItem(index){
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
 cart.splice(index,1);
 localStorage.setItem('cart',JSON.stringify(cart));
-updateSideCart();
+updateCart();
 }
 
 // ----------------------------
@@ -136,7 +120,7 @@ function payWithPaystack(){
 let cart=JSON.parse(localStorage.getItem('cart'))||[];
 
 if(cart.length===0){
-alert("Cart is empty");
+alert("Cart empty");
 return;
 }
 
@@ -159,18 +143,14 @@ currency: "GHS",
 
 metadata:{
 custom_fields:[
-{
-display_name:"Phone",
-variable_name:"phone",
-value:phone
-}
+{display_name:"Phone",variable_name:"phone",value:phone}
 ]
 },
 
 callback: function(){
 alert("Payment successful!");
 localStorage.removeItem('cart');
-updateSideCart();
+updateCart();
 },
 
 onClose: function(){
@@ -186,7 +166,7 @@ handler.openIframe();
 // ----------------------------
 function buyNow(name,price){
 localStorage.setItem('cart', JSON.stringify([{item:name,price:Number(price)}]));
-updateSideCart();
+updateCart();
 payWithPaystack();
 }
 
@@ -194,26 +174,21 @@ payWithPaystack();
 // INIT
 // ----------------------------
 document.addEventListener("DOMContentLoaded",()=>{
+renderProducts();
+updateCart();
 
-renderProducts("all");
-updateSideCart();
-
-document.querySelectorAll('nav a').forEach(link=>{
-link.addEventListener('click',e=>{
+document.querySelectorAll("nav a").forEach(link=>{
+link.addEventListener("click",e=>{
 e.preventDefault();
-renderProducts(link.getAttribute('data-category'));
+renderProducts(link.getAttribute("data-category"));
 });
 });
 
-const sideCart=document.getElementById('sideCart');
-
-document.getElementById('cartIcon').onclick=()=>{
-sideCart.style.right='0';
-updateSideCart();
+document.getElementById("cartIcon").onclick=()=>{
+document.getElementById("sideCart").style.right="0";
 };
 
-document.getElementById('closeSideCart').onclick=()=>{
-sideCart.style.right='-100%';
+document.getElementById("closeSideCart").onclick=()=>{
+document.getElementById("sideCart").style.right="-100%";
 };
-
 });
