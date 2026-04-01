@@ -124,33 +124,41 @@ localStorage.setItem("cart",JSON.stringify(cart));
 updateCart();
 }
 
-// ------------------ PAYSTACK ------------------
-function payWithPaystack(){
-let email=document.getElementById("customerEmail").value;
-let phone=document.getElementById("customerPhone").value;
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
+// ------------------ WHATSAPP CHECKOUT ------------------
+function sendToWhatsApp(){
+  let email = document.getElementById("customerEmail").value;
+  let phone = document.getElementById("customerPhone").value;
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-if(!email || !phone){
-alert("Enter email and phone");
-return;
-}
+  if(cart.length === 0){
+    alert("Cart is empty");
+    return;
+  }
 
-let total=0;
-cart.forEach(i=> total+=i.price);
+  if(!email || !phone){
+    alert("Enter email and phone");
+    return;
+  }
 
-PaystackPop.setup({
-key:"pk_live_76e7df83f71c725b7e10d514b3c935324a97761e",
-email:email,
-amount:total*100,
-currency:"GHS",
+  let message = "🛒 *NEW ORDER* %0A%0A";
+  let total = 0;
 
-callback:function(res){
-localStorage.setItem("receipt",JSON.stringify({email,phone,cart,total,ref:res.reference}));
-localStorage.removeItem("cart");
-window.location.href="receipt.html";
-}
+  cart.forEach((item, i) => {
+    message += `${i+1}. ${item.item} - GHC ${item.price}%0A`;
+    total += item.price;
+  });
 
-}).openIframe();
+  message += `%0A💰 Total: GHC ${total}%0A`;
+  message += `📧 Email: ${email}%0A`;
+  message += `📱 Phone: ${phone}%0A`;
+  message += `%0A✅ Paid to MoMo (MUDA)`;
+
+  let url = `https://wa.me/233509329683?text=${message}`;
+
+  window.open(url, "_blank");
+
+  localStorage.removeItem("cart");
+  updateCart();
 }
 
 // ------------------ UI CONTROL ------------------
