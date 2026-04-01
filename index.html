@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -110,8 +110,33 @@ digitalhubghsupport@gmail.com
 <img src="https://img.icons8.com/ios-filled/50/ffffff/topic.png" alt="Support">
 </a>
 
+<!-- 🔥 NEW: REQUEST PRODUCT BUTTON -->
+<button id="requestBtn">💬 Request Product</button>
+
+<!-- 🔥 NEW: REQUEST PRODUCT MODAL -->
+<div id="requestModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    
+    <h2>Request a Product</h2>
+    <p style="font-size:14px;color:gray;">Can’t find what you need? Send us a request.</p>
+
+    <form id="requestForm">
+      <input type="text" placeholder="Your Name" required>
+      <input type="text" placeholder="Email or WhatsApp" required>
+      <input type="text" placeholder="Product Name" required>
+      <textarea placeholder="Describe the product..." required></textarea>
+      
+      <button type="submit" id="submitBtn">Send Request</button>
+    </form>
+  </div>
+</div>
+
 <!-- YOUR STORE JS -->
 <script src="store.js"></script>
+
+<!-- 🔥 NEW: REQUEST FEATURE SCRIPT -->
+<script src="request.js"></script>
 
 <!-- TAWK CHAT -->
 <script>
