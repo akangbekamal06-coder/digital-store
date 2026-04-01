@@ -1,4 +1,4 @@
-:<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -20,7 +20,6 @@
     <a href="#" data-category="Proxies">Proxies</a>
   </nav>
 
-  <!-- Cart Icon -->
   <div class="cart-wrapper" id="cartIcon">
     <img src="https://img.icons8.com/ios-filled/50/ff4b4b/shopping-cart.png" alt="Cart">
     <span id="cartCount">0</span>
@@ -57,10 +56,22 @@
     style="width:100%;padding:10px;margin-top:8px;border-radius:6px;border:1px solid #ccc;"
   >
 
-  <!-- PAY BUTTON -->
-  <button onclick="payWithPaystack()" style="margin-top:12px;width:100%;">
-    Pay Now
-  </button>
+  <!-- MOMO PAYMENT -->
+  <div style="margin-top:12px;text-align:center;">
+    <p><strong>Pay with Mobile Money</strong></p>
+    <p>Number: <strong>0241923407</strong></p>
+    <p>Name: <strong>MUDA</strong></p>
+    <p>Network: MTN / Telecel / AirtelTigo</p>
+
+    <p style="font-size:13px;color:gray;">
+      After payment, click below to send your order
+    </p>
+
+    <button onclick="sendToWhatsApp()" 
+    style="margin-top:10px;width:100%;background:green;color:white;padding:12px;border:none;border-radius:6px;font-size:15px;cursor:pointer;">
+      I've Made Payment
+    </button>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -98,9 +109,6 @@ digitalhubghsupport@gmail.com
 <a href="#" target="_blank" id="supportBtn" title="Live Support">
 <img src="https://img.icons8.com/ios-filled/50/ffffff/topic.png" alt="Support">
 </a>
-
-<!-- ✅ PAYSTACK SCRIPT (MUST BE BEFORE store.js) -->
-<script src="https://js.paystack.co/v1/inline.js"></script>
 
 <!-- YOUR STORE JS -->
 <script src="store.js"></script>
