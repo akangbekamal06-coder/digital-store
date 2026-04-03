@@ -4,7 +4,7 @@
 const products = [
 
 {name:"EXPRESS VPN 1 MONTH", price:45, image:"images/express-vpn.jpg", category:"VPN"},
-{name:"EXPRESS VPN 3 MONTHS", price:50, image:"images/express-vpn.jpg", category:"VPN"},
+{name:"EXPRESS VPN 3 MONTHS", price:60, image:"images/express-vpn.jpg", category:"VPN"},
 {name:"EXPRESS VPN 1 YEAR", price:90, image:"images/express-vpn.jpg", category:"VPN"},
 
 {name:"PIA VPN 1 MONTH", price:45, image:"images/pia-vpn.png", category:"VPN"},
@@ -25,30 +25,27 @@ const products = [
 {name:"CYBER GHOST VPN 6 MONTHS", price:50, image:"images/cyberghost-vpn.jpg", category:"VPN"},
 {name:"CYBER GHOST VPN 2 YEARS", price:90, image:"images/cyberghost-vpn.jpg", category:"VPN"},
 
-{name:"SURFSHARK VPN 1 MONTH", price:45, image:"images/surfshark-vpn.jpg", category:"VPN"},
-
 {name:"GMAIL PHONE VERIFIED ACCOUNT", price:25, image:"images/gmail.jpg", category:"Accounts"},
-{name:"GOOGLE VOICE ACCOUNT", price:40, image:"images/google-voice.png", category:"Accounts"},
-{name:"NETFLIX 1 MONTH", price:25, image:"images/netflix.png", category:"Accounts"},
+{name:"USA FACEBOOK ACCOUNT", price:50, image:"images/facebook.png", category:"Accounts"},
 
-{name:"1GB MTN DATA BUNDLE", price:5, image:"images/data-bundle.png", category:"Data"},
-{name:"2GB MTN DATA BUNDLE", price:10, image:"images/data-bundle.png", category:"Data"},
-{name:"3GB MTN DATA BUNDLE", price:15, image:"images/data-bundle.png", category:"Data"},
-{name:"4GB MTN DATA BUNDLE", price:20, image:"images/data-bundle.png", category:"Data"},
-{name:"5GB MTN DATA BUNDLE", price:25, image:"images/data-bundle.png", category:"Data"},
-{name:"6GB MTN DATA BUNDLE", price:30, image:"images/data-bundle.png", category:"Data"},
-{name:"8GB MTN DATA BUNDLE", price:40, image:"images/data-bundle.png", category:"Data"},
-{name:"10GB MTN DATA BUNDLE", price:45, image:"images/data-bundle.png", category:"Data"},
-{name:"15GB MTN DATA BUNDLE", price:65, image:"images/data-bundle.png", category:"Data"},
-{name:"10GB TELECEL DATA BUNDLE", price:42, image:"images/telecel.jpg", category:"Data"},
+// NETFLIX
+{name:"NETFLIX SHARED 1 MONTH", price:35, image:"images/netflix.png", category:"Accounts"},
+{name:"NETFLIX PERSONAL 1 MONTH", price:35, image:"images/netflix.png", category:"Accounts"},
 
+{name:"SPOTIFY PREMIUM 1 MONTH", price:40, image:"images/spotify.png", category:"Accounts"},
+
+// MESSAGING
 {name:"TEXTNOW ACCOUNT", price:25, image:"images/textnow.png", category:"Messaging"},
 {name:"TEXTFREE ACCOUNT", price:20, image:"images/textfree.png", category:"Messaging"},
 
-{name:"9 PROXY REFILLS – 10 IPs", price:30, image:"images/proxy.jpg", category:"Proxies"},
-{name:"9 PROXY REFILLS – 20 IPs", price:60, image:"images/proxy.jpg", category:"Proxies"},
-{name:"9 PROXY REFILLS – 50 IPs", price:100, image:"images/proxy.jpg", category:"Proxies"},
-{name:"9 PROXY REFILLS – 150 IPs", price:300, image:"images/proxy.jpg", category:"Proxies"}
+// ITUNES
+{name:"$2 ITUNES E-CODE", price:32, image:"images/itunes-2.png", category:"Giftcards"},
+{name:"$3 ITUNES E-CODE", price:43, image:"images/itunes-3.png", category:"Giftcards"},
+{name:"$4 ITUNES E-CODE", price:57, image:"images/itunes-4.png", category:"Giftcards"},
+{name:"$5 ITUNES E-CODE", price:70, image:"images/itunes-5.png", category:"Giftcards"},
+{name:"$10 ITUNES E-CODE", price:120, image:"images/itunes-10.png", category:"Giftcards"},
+{name:"$15 ITUNES E-CODE", price:215, image:"images/itunes-15.png", category:"Giftcards"},
+{name:"$20 ITUNES E-CODE", price:275, image:"images/itunes-20.png", category:"Giftcards"}
 
 ];
 
